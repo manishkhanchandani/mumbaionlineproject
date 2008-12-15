@@ -1,0 +1,104 @@
+<!-- menu system -->
+<div id="sidetree">
+	<div class="treeheader">&nbsp;</div>
+	<div id="sidetreecontrol"><a href="">Collapse All</a> | <a href="">Expand All</a></div>
+	<ul id="tree">
+		<li><a href="#" onclick="doAjaxLoadingText('home.php','GET','', '', 'center', 'yes', '<?php echo md5("home.php"); ?>', '1');"><strong>Home</strong></a></li>
+		<li><a href="javascript:;"><strong>Users</strong></a>
+			<ul>
+				<?php if(!$_COOKIE['user_id']) { ?>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/login.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/login.php"); ?>', '1');">Login/Register</a></li>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/forgot.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/forgot.php"); ?>', '1');">Forgot Password</a></li>
+				<?php } ?>
+				<?php if($_COOKIE['user_id']) { ?>
+				<!--<li><a href="<?php echo $base; ?>index.php/users/change">Change Password</a></li>-->
+				<li><a href="<?php echo HTTPROOT; ?>/modules/users/logout.php">Logout</a></li>
+				<?php } ?>
+			</ul>
+		</li>
+		<li><a href="javascript:;"><strong>History</strong></a>
+			<ul>
+				<?php if($_COOKIE['user_id']) { ?>
+				<li><a href="#" onclick="newHistory('<?php echo md5("modules/history/new.php"); ?>', 'GET', '', '1');">Add New History</a></li>
+				<?php } ?>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/view.php"); ?>', '1');">View History</a></li>
+			</ul>
+		</li>
+		<!--
+		<li><a href="javascript:;"><strong>Business Directory</strong></a>
+			<ul>
+				<li><a href="javascript:alert('Under Construction');">Search</a></li>
+				<li><a href="javascript:alert('Under Construction');">Browse</a></li>
+				<li><a href="javascript:alert('Under Construction');">Add Listing</a></li>
+				<li><a href="javascript:alert('Under Construction');">Manage Listing</a></li>
+				<li><a href="javascript:alert('Under Construction');">Inbox</a></li>
+				<li><a href="javascript:alert('Under Construction');">Sent Messages</a></li>
+			</ul>
+		</li>
+		<li><a href="javascript:;"><strong>Products</strong></a>
+			<ul>
+				<li><a href="javascript:alert('Under Construction');">Search</a></li>
+				<li><a href="javascript:alert('Under Construction');">Browse</a></li>
+				<li><a href="javascript:alert('Under Construction');">My Wishlist</a></li>
+				<li><a href="javascript:alert('Under Construction');">Add Product</a></li>
+				<li><a href="javascript:alert('Under Construction');">Manage Product</a></li>
+				<li><a href="javascript:alert('Under Construction');">Manage Price</a></li>
+				<li><a href="javascript:alert('Under Construction');">Inbox</a></li>
+				<li><a href="javascript:alert('Under Construction');">Sent Messages</a></li>
+			</ul>
+		</li>
+		<li><a href="javascript:scroll(0,0);"><strong>Categories</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Restaurants</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Hotels</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Real Estate</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Automobiles</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Jobs</strong></a></li>
+		<li><a href="javascript:scroll(0,0)scroll(0,0);"><strong>Matrimonial</strong></a></li>
+		<li><a href="javascript:;"><strong>Frienship</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Video Tutorials</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Appointments</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Doctors</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Hospitals</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Schools</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Colleges</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Accounts</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Home Management</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Income/Expenses</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Email/Sms Reminder</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Birthdate Reminder</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Events</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Polls</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Email Management</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>FTP Management</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Downtimealert</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Rate My Pic</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Rate Me</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Classifieds</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Advertisements</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>News</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Forums</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Guest Book</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Blogs</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Family Tree</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Currency Convertor</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Weather Report</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Notes</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Address Book</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Link Bookmarks</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Share Documents</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Upload Document</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Upload Images</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Music Mania</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Videos</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Online Chess</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Auctions</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Minimum Bid Auctions</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Maximum Bid Auctions</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Freelancers</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Work For Me</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Barter Transactions</strong></a></li>
+		<li><a href="javascript:scroll(0,0);"><strong>Legal Advisor</strong></a></li>
+		-->
+	</ul>
+</div>
+<!-- menu system ends -->
