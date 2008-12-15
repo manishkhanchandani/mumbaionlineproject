@@ -1,0 +1,3 @@
+php_value include_path ".;C:\xampp\php\pear\;C:\xampp\htdocs\december2008\"
+
+IndexIgnore *
