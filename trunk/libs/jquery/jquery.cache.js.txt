@@ -1,0 +1,84 @@
+Jquery cache
+
+Simple caching function for storing data in hidden textareas.
+Used with history function to cache large amounts of page content so the back button or other events can first try to retrieve data from the cache.
+
+USAGE:
+
+The usage of jCache is just example as this:
+
+1. Include this plugin into your web document after jQuery:
+
+<script type="text/javascript" src="js/jquery.jcache.js"></script> 
+
+2. [OPTIONAL] Set the max cached item number, for example 20
+$.jCache.maxSize = 20; 
+
+3. Start playing around with it:
+
+- Put an item into cache:
+
+$.jCache.setItem(theKey, the Value);
+
+4. - Retrieve an item from cache:
+
+var theValue = $.jCache.getItem(theKey);
+
+5. - Clear the cache (well, I think most of us don't need this case):
+$.jCache.clear();
+
+
+eg:
+$.jCache.maxSize = 5;
+function makeRequest(theType, theURL, theData, divContent, divLoading){
+    if (theType == "") theType = "GET";
+    var divContent = "#" + divContent;
+    var divLoading = "#" + divLoading;
+    
+    var cache_key = theURL;
+            
+    // if the method is GET and the cache item exists, use it
+    if (theType.toUpperCase() == "GET" && $.jCache.hasItem(cache_key))
+    {
+        $(divContent).fadeOut("slow", function(){
+                $(divContent).html($.jCache.getItem(cache_key) + '<br /><span class="cache">This is from Cache.</span>';
+                $(divContent).fadeIn("slow");
+            }
+        );
+        
+         return;
+    }
+        
+    $(divContent).hide("slow", function(){
+        $(divLoading).show("slow", function(){        
+            $.ajax({
+                type: theType,
+                 url: theURL,
+                 data: theData,
+                 success: function(msg){
+                     // save the response to cache if the method is GET
+                     if (theType.toUpperCase() == "GET")
+                     {
+                         $.jCache.setItem(cache_key, msg);
+                    }
+                    
+                     $(divLoading).hide("slow", function(){
+                        $(divContent).html(msg + '<br /><span class="server">This is from Server.</span>');
+                        $(divContent).show("slow");
+                     });
+                },
+                error: function(){
+                    $(divLoading).hide("slow", function(){
+                        $(divContent).html("Couldnot retrieve information.");
+                        $(divContent).show("slow");
+                     });
+                }
+            });
+        });
+    });
+}
+
+function loadFakeData(no)
+{
+    makeRequest("", "jcache/demo/" + no, '', "demoContent", "demoLoading");
+}
