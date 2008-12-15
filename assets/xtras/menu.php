@@ -18,10 +18,11 @@
 		</li>
 		<li><a href="javascript:;"><strong>History</strong></a>
 			<ul>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/view.php"); ?>', '1');">View History</a></li>
 				<?php if($_COOKIE['user_id']) { ?>
 				<li><a href="#" onclick="newHistory('<?php echo md5("modules/history/new.php"); ?>', 'GET', '', '1');">Add New History</a></li>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/myhistory.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/myhistory.php"); ?>', '1');">My History</a></li>
 				<?php } ?>
-				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/view.php"); ?>', '1');">View History</a></li>
 			</ul>
 		</li>
 		<!--
