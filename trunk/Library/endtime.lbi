@@ -1,0 +1,6 @@
+<?php
+$TIMEEND = microtime(true);
+$time = $TIMEEND - $TIMESTART;
+
+echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seconds ($cache)</div>";
+?>
