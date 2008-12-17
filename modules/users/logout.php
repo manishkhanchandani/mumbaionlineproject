@@ -5,6 +5,6 @@ function logout() {
 	setcookie("email", '', (time()-300), "/");	
 }
 logout();
-header("Location: ../../index.php");
+header("Location: ".HTTPROOT."/index.php");
 exit;
 ?>
