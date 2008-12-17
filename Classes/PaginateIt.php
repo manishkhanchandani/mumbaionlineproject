@@ -64,7 +64,7 @@ class PaginateIt {
     function GetPageLinks_Old(){
         $strLinks = '';
         $pageCount = $this->GetPageCount();
-        $queryString = $this->GetQueryString();
+        $queryString = $this->GetQueryString_Old();
         $linksPad = floor($this->linksToDisplay/2);
 
         if($this->linksToDisplay == -1){
