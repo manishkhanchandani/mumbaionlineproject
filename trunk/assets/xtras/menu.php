@@ -3,7 +3,7 @@
 	<div class="treeheader">&nbsp;</div>
 	<div id="sidetreecontrol"><a href="">Collapse All</a> | <a href="">Expand All</a></div>
 	<ul id="tree">
-		<li><a href="#" onclick="doAjaxLoadingText('home.php','GET','', '', 'center', 'yes', '<?php echo md5("home.php"); ?>', '1');"><strong>Home</strong></a></li>
+		<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/home.php','GET','', '', 'center', 'yes', '<?php echo md5("home.php"); ?>', '1');"><strong>Home</strong></a></li>
 		<li><a href="javascript:;"><strong>Users</strong></a>
 			<ul>
 				<?php if(!$_COOKIE['user_id']) { ?>
@@ -16,14 +16,40 @@
 				<?php } ?>
 			</ul>
 		</li>
-		<li><a href="javascript:;"><strong>History</strong></a>
+		<li><a href="javascript:;"><strong>Utilities</strong></a>
 			<ul>
-				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/view.php"); ?>', '1');">View History</a></li>
-				<?php if($_COOKIE['user_id']) { ?>
-				<li><a href="#" onclick="newHistory('<?php echo md5("modules/history/new.php"); ?>', 'GET', '', '1');">Add New History</a></li>
-				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/myhistory.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/myhistory.php"); ?>', '1');">My History</a></li>
-				<?php } ?>
+				<li><a href="javascript:;"><strong>History</strong></a>
+					<ul>
+						<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/view.php"); ?>', '1');">View History</a></li>
+						<?php if($_COOKIE['user_id']) { ?>
+						<li><a href="#" onclick="newHistory('<?php echo md5("modules/history/new.php"); ?>', 'GET', '', '1');">Add New History</a></li>
+						<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/history/myhistory.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/history/myhistory.php"); ?>', '1');">My History</a></li>
+						<?php } ?>
+					</ul>
+				</li>
+				<li><a href="javascript:;"><strong>Phone Book</strong></a>
+					<ul>
+						<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/phonebook/index.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/phonebook/index.php"); ?>', '1');">Public Contacts</a></li>
+						<?php if($_COOKIE['user_id']) { ?>
+							<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/phonebook/view.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/phonebook/view.php"); ?>', '1');">My Contacts</a></li>
+							<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/phonebook/new.php','GET','initialUrl=<?php echo HTTPROOT; ?>/modules/phonebook/view.php', '', 'center', 'yes', '<?php echo md5("modules/phonebook/new.php"); ?>', '1');">Add New Contact</a></li>
+						<?php } ?>
+					</ul>
+				</li>
 			</ul>
+		</li>
+		<li><a href="<?php echo HTTPROOT; ?>/keywords.php"><strong>Minisite</strong></a>
+			<?php 
+			$tmp = "menu_Minisite";
+			$newsMenu = checkcache($tmp, 300);
+			if($newsMenu) {
+				echo $newsMenu;
+			} else {
+				$newsMenu = $common->getRandomKeywords();
+				cachefunction($tmp, $newsMenu);
+				echo $newsMenu;
+			}
+			?>
 		</li>
 		<!--
 		<li><a href="javascript:;"><strong>Business Directory</strong></a>

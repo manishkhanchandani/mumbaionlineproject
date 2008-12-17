@@ -132,3 +132,11 @@ function newHistory(cache_key, method, data, cacheyes) {
 		   }
 	});
 }
+
+function confirmDelete(msg) {
+	str=confirm(msg);
+	if(str)
+		return true;
+	else 
+		return false;
+}
