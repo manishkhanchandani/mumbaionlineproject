@@ -1,9 +1,175 @@
 <?php
 class Common {
+
+	public $cacheSecs = 300;
+	private static $instance;
 	
-	function __construct() {
-	
+	function __construct($dbFrameWork) {
+		if(self::$instance) {
+			return self::$instance;
+		} else {
+			self::$instance = $this;
+			$this->dbFrameWork = $dbFrameWork;
+		}
 	}
+	
+	public function insertRecord($table_name, $pk, $record) {
+		$sql = "SELECT * FROM $table_name WHERE $pk = -1";  
+		# Select an empty record from the database 
+		$rs = $this->dbFrameWork->Execute($sql); # Execute the query and get the empty recordset 
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		# Pass the empty recordset and the array containing the data to insert 
+		# into the GetInsertSQL function. The function will process the data and return 
+		# a fully formatted insert sql statement. 
+		$insertSQL = $this->dbFrameWork->GetInsertSQL($rs, $record);
+		$this->dbFrameWork->Execute($insertSQL); 
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		$uid = $this->dbFrameWork->Insert_ID();
+		return $uid;
+	}
+	
+	public function editRecord($table_name, $pk, $record, $uid) {
+		$sql = "SELECT * FROM `$table_name` WHERE `$pk` = $uid";  
+		# Select a record to update 
+		$rs = $this->dbFrameWork->Execute($sql); // Execute the query and get the existing record to update 
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		# Pass the single record recordset and the array containing the data to update 
+		# into the GetUpdateSQL function. The function will process the data and return 
+		# a fully formatted update sql statement with the correct WHERE clause. 
+		# If the data has not changed, no recordset is returned 
+
+		$updateSQL = $this->dbFrameWork->GetUpdateSQL($rs, $record); # Update the record in the database
+		if($updateSQL) {
+			$return = $this->dbFrameWork->Execute($updateSQL); 
+			if($this->dbFrameWork->ErrorMsg()) {
+				throw new Exception($this->dbFrameWork->ErrorMsg());
+			}		
+		}
+	}
+	public function selectCount($sql) {
+		$rs = $this->dbFrameWork->Execute($sql);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		$arr = $rs->FetchRow();
+		$cnt = $arr['cnt'];
+		return $cnt;
+	}
+	
+	public function selectCacheCount($sql) {
+		$rs = $this->dbFrameWork->CacheExecute($this->cacheSecs, $sql);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		$arr = $rs->FetchRow();
+		$cnt = $arr['cnt'];
+		return $cnt;
+	}
+	
+	public function selectRecord($sql) {
+		$rs = $this->dbFrameWork->Execute($sql);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		while ($arr = $rs->FetchRow()) { 
+			$return[] = $arr;
+		}
+		return $return;
+	}
+	
+	public function selectLimitRecord($sql,$max=10,$start=0) {
+		$rs = $this->dbFrameWork->SelectLimit($sql, $max, $start);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		while ($arr = $rs->FetchRow()) { 
+			$return[] = $arr;
+		}
+		return $return;
+	}
+	
+	public function selectCacheRecord($sql) {
+		$rs = $this->dbFrameWork->CacheExecute($this->cacheSecs, $sql);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		while ($arr = $rs->FetchRow()) { 
+			$return[] = $arr;
+		}
+		return $return;
+	}
+	
+	public function selectCacheLimitRecord($sql, $max=10, $start=0) {
+		$rs = $this->dbFrameWork->CacheSelectLimit($this->cacheSecs, $sql, $max, $start);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		while ($arr = $rs->FetchRow()) { 
+			$return[] = $arr;
+		}
+		return $return;
+	}
+	public function categoryParentLink($formId, $catId) {
+		if(!$this->catLink) $this->catLink = array();
+		$sql = "select * from category where category_id = '".$catId."' and form_id = '".$formId."'";
+		$rec = $this->selectCacheRecord($sql);
+		if(count($rec)>0) {
+			$catId = $rec[0]['category_id'];
+			$pid = $rec[0]['pid'];
+			$level = $rec[0]['level'];
+			$category = '<a href="'.$_SERVER['PHP_SELF'].'?form_id='.$formId.'&pid='.$catId.'&level='.$level.$this->queryString.'">'.$rec[0]['category'].'</a>';
+			array_unshift($this->catLink,$category);
+			$this->categoryParentLink($formId, $pid);	
+		} else {
+			$this->catLinkDisplay = '<a href="'.$_SERVER['PHP_SELF'].'?form_id='.$formId.$this->queryString.'">Home</a> >> ';
+			foreach($this->catLink as $value) {
+				$this->catLinkDisplay .= $value.' >> ';
+			}
+			$this->catLinkDisplay = substr($this->catLinkDisplay,0,-4);
+		}
+	}
+	public function categoryChild($formId) {
+		if(!$this->catLink) $this->catLink = array();		
+			
+		echo $sql = "select * from category where form_id = '".$formId."'";
+		$rs = $this->dbFrameWork->CacheExecute($this->cacheSecs, $sql);
+		if($this->dbFrameWork->ErrorMsg()) {
+			throw new Exception($this->dbFrameWork->ErrorMsg());
+		}
+		while ($arr = $rs->FetchRow()) { 
+			$recAll[$arr['category_id']] = $arr;
+		}
+		echo $sql = "select b.* from category as a, category as b where b.pid = a.category_id and a.form_id = '".$formId."'";
+		$rec = $this->selectCacheRecord($sql);
+		print_r($rec);
+		exit;
+		if(count($rec)>0) {
+			$catId = $rec[0]['category_id'];
+			$pid = $rec[0]['pid'];
+			$level = $rec[0]['level'];
+			$category = '<a href="'.$_SERVER['PHP_SELF'].'?form_id='.$formId.'&pid='.$catId.'&level='.$level.$this->queryString.'">'.$rec[0]['category'].'</a>';
+			array_unshift($this->catLink,$category);
+			$this->categoryParentLink($formId, $pid);	
+		} else {
+			$this->catLinkDisplay = '<a href="'.$_SERVER['PHP_SELF'].'?form_id='.$formId.$this->queryString.'">Home</a> >> ';
+			foreach($this->catLink as $value) {
+				$this->catLinkDisplay .= $value.' >> ';
+			}
+			$this->catLinkDisplay = substr($this->catLinkDisplay,0,-4);
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	public function display_table_fields_sql($sql) {
 		$rs =mysql_query($sql." LIMIT 1");
@@ -441,5 +607,17 @@ class Common {
 		return $queryString;
 	}
 	
+	public function getRandomKeywords() {
+		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 20";
+		$rs = mysql_query($sql) or die('error in line '.__LINE__.' of file '.__FILE__.' due to mysql error: '.mysql_error());
+		if(mysql_num_rows($rs)) {
+			$result = '<ul>';
+			while($rec = mysql_fetch_array($rs)) {
+				$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.html">'.ucwords($rec['keyword']).'</a></li>';
+			}
+			$result .= '</ul>';
+		}
+		return $result;
+	}
 }
 ?>
