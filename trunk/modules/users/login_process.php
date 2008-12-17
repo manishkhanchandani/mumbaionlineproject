@@ -11,19 +11,19 @@ if($_POST) {
 	if(!trim($_POST['email'])) {
 		$msg = "Email field is blank.";
 		$initialUrl = "modules/users/login.php";
-		header("Location: ../../index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
+		header("Location: ".HTTPROOT."/index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
 		exit;
 	}
 	if(!trim($_POST['password'])) {
 		$msg = "Password field is blank.";
 		$initialUrl = "modules/users/login.php";
-		header("Location: ../../index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
+		header("Location: ".HTTPROOT."/index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
 		exit;	
 	}
 	if(!$common->emailvalidity(trim($_POST['email']))) {
 		$msg = "Email field is not valid.";
 		$initialUrl = "modules/users/login.php";
-		header("Location: ../../index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
+		header("Location: ".HTTPROOT."/index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
 		exit;
 	}
 	$sql = "select * from user where email = '".addslashes(stripslashes(trim($_POST['email'])))."'";
@@ -54,7 +54,7 @@ if($_POST) {
 			// password is not matching
 			$msg = "Email and Password Does Not Matches";
 			$initialUrl = "modules/users/login.php";
-			header("Location: ../../index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
+			header("Location: ".HTTPROOT."/index.php?email=".$_POST['email']."&msg=".urlencode($msg)."&initialUrl=".urlencode($initialUrl));
 			exit;
 		} else {
 			$rec = mysql_fetch_array($rs);
@@ -62,7 +62,7 @@ if($_POST) {
 		}
 	}
 	$msg = "You are successfully logged on our site";
-	header("Location: ../../confirm.php?msg=".urlencode($msg));
+	header("Location: ".HTTPROOT."/confirm.php?msg=".urlencode($msg));
 	exit;
 }
 ?>

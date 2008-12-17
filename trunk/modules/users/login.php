@@ -3,7 +3,7 @@
 <?php if($_GET['msg']) { ?>
 <p class="error"><?php echo $_GET['msg']; ?></p>
 <?php } ?>
-<form id="form1" name="form1" method="post" action="modules/users/login_process.php">
+<form id="form1" name="form1" method="post" action="<?php echo HTTPROOT; ?>/modules/users/login_process.php">
   <p>Email: 
     <input name="email" type="text" id="email" value="<?php echo $_GET['email']; ?>" size="45" />
 </p>
