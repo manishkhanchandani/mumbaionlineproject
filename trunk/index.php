@@ -8,19 +8,19 @@ $_GET['initialUrl'] = "home.php";
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>MumbaiOnline.Org.In</title>
+<title>MumbaiOnline.Org.In :: Mumbai, Mumbai Online, All about Mumbai, My Mumbai, Know Mumbai</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript">
 var HTTPROOT = "<?php echo HTTPROOT; ?>";
 </script>
-<link href="assets/css/stylesheet.css" rel="stylesheet" type="text/css" />
-<script language="javascript" src="libs/jquery/jquery-1.2.6.js"></script>
+<link href="<?php echo HTTPROOT; ?>/assets/css/stylesheet.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="<?php echo HTTPROOT; ?>/libs/jquery/jquery-1.2.6.js"></script>
 <!-- Menu System -->
-<link rel="stylesheet" href="libs/jquery/treeview/jquery.treeview.css" />
-<link rel="stylesheet" href="<?php echo $base; ?>libs/jquery/treeview/screen.css" />
+<link rel="stylesheet" href="<?php echo HTTPROOT; ?>/libs/jquery/treeview/jquery.treeview.css" />
+<link rel="stylesheet" href="<?php echo HTTPROOT; ?>/libs/jquery/treeview/screen.css" />
 
-<script src="libs/jquery/jquery.cookie.js" type="text/javascript"></script>
-<script src="libs/jquery/treeview/jquery.treeview.js" type="text/javascript"></script>
+<script src="<?php echo HTTPROOT; ?>/libs/jquery/jquery.cookie.js" type="text/javascript"></script>
+<script src="<?php echo HTTPROOT; ?>/libs/jquery/treeview/jquery.treeview.js" type="text/javascript"></script>
 
 <script type="text/javascript">	
 	$(function() {
@@ -35,11 +35,11 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 <!-- Menu System -->
 
 <!-- datepicker -->
-<link rel="stylesheet" href="libs/core.ui.datepicker/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
-<script src="libs/core.ui.datepicker/ui.datepicker.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="<?php echo HTTPROOT; ?>/libs/core.ui.datepicker/ui.datepicker.css" type="text/css" media="screen" title="core css file" charset="utf-8" />
+<script src="<?php echo HTTPROOT; ?>/libs/core.ui.datepicker/ui.datepicker.js" type="text/javascript" charset="utf-8"></script>
 <!-- datepicker ends -->
-<script src="libs/jquery/jquery.cache2.js" type="text/javascript"></script>
-<script language="javascript" src="assets/js/script.js"></script>
+<script src="<?php echo HTTPROOT; ?>/libs/jquery/jquery.cache2.js" type="text/javascript"></script>
+<script language="javascript" src="<?php echo HTTPROOT; ?>/assets/js/script.js"></script>
 <?php if($globalPluginJs) { ?>
 	<?php foreach($globalPluginJs as $jsFile) { ?>
 		<script language="javascript" src="<?php echo $jsFile; ?>"></script>
@@ -57,18 +57,23 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 	}
 </script>
 <?php } ?>
-<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<meta name="description" content="Mumbai, Mumbai Government, Mumbai Weather, Mumbai fun, Mumbai Guide, Complete guide Mumbai, Important Services in Mumbai, Emergency Services in Mumbai, Mumbai Services Information, Entertainment in Mumbai, Entertainment Centres in Mumbai, Mumbai News, History of Mumbai, Tourist places in Mumbai">
+<meta name="keywords" content="Mumbai, Mumbai Online, All about Mumbai, My Mumbai, Know Mumbai, Mumbai fun, Mumbai Guide, Complete guide for Mumbai, Hospitals in Mumbai, Emergency Services in Mumbai, Mumbai Services Information, Entertainment in Mumbai, Entertainment in Mumbai, Mumbai News, Hotels in Mumbai, Restaurants in Mumbai, Movies in Mumbai, Bars in Mumbai, Mumbai Government, Mumbai Profile, Red Fort, Qutub Minar">
+<meta name="language" content="English">
+<meta name="author" content="Mumbaionline.org.in :: Manish Khanchandani">
+<!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>
 
 <body>
 <div id="mainContent">
 	<div id="head"></div>
-	<div id="header"><img src="assets/images/mumbaionline_org_in.jpg" /></div>
+	<div id="header"><a href="http://www.mumbaionline.org.in"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
 	<div style="clear:both"></div>
 	<div id="middle">
 		<div id="left">
-		<?php include('assets/xtras/menu.php'); ?>
+		<?php include(DOCROOT.'/assets/xtras/menu.php'); ?>
 		</div>
 		<div id="center">	
 <!-- InstanceBeginEditable name="EditRegion3" -->

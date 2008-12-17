@@ -1,42 +1,58 @@
 <?php
 include_once('start.php');
+include('Classes/PaginateIt.php');
+if($_GET['page']) $_GET['pageNum_rsKeywords'] = $_GET['page']-1;
 
-// FUNCTIONALITY
-$j = md5($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
-$feed = checkcache($j);
-if(!$feed) {
-	include_once('./Classes/simplepie.php');
-	$simplepie = new SimplePie;
-	$url = $_GET['url'];
-	if(!$url) 
-		$url = 'http://www.google.com/news?sourceid=navclient-ff&rlz=1B3GGGL_enIN279IN280&hl=en&ned=us&q=mumbai&ie=UTF-8&nolr=1&output=rss';
-	else 
-		$url = urldecode($url);
-	$simplepie->set_feed_url($url);
-	$simplepie->init();
-	$dig_feed = $simplepie;
-	$feed = "<ul>";
-	if($dig_feed) {
-		foreach($dig_feed->get_items() as $item) {
-			$feed .= "<li><a href='" .$item->get_link() . "' target='_blank'>" . $item->get_title() . "</a><br />";
-			$desc = str_replace("<a ", "<a target='_blank' ", $item->get_description());
-			$feed .= $desc."
-			</li>";
-		}
-	}
-	$feed .= "</ul>";
-	cachefunction($j, $feed);
-	$cache = 'no cache';
-} else {
-	$cache = 'cache';
+$maxRows_rsKeywords = 10;
+$pageNum_rsKeywords = 0;
+if (isset($_GET['pageNum_rsKeywords'])) {
+  $pageNum_rsKeywords = $_GET['pageNum_rsKeywords'];
 }
+
+$query_rsKeywords = "SELECT keyword_id, keyword, kw_url_lookup FROM cg_short_keywords WHERE keyword is NOT NULL AND keyword != ''";
+if($_GET['q']) {
+	$query_rsKeywords .= " AND keyword LIKE '".$_GET['q']."%'";
+	$query_rsKeywords .= "  ORDER BY keyword ASC";
+	$maxRows_rsKeywords = 100;
+	$_GET['totalRows_rsKeywords'] = 100;
+} else if($_GET['kw']) {
+	$query_rsKeywords = "SELECT keyword_id, keyword, kw_url_lookup, MATCH(keyword) AGAINST('+".$_GET['kw']."' IN BOOLEAN MODE) as m FROM cg_short_keywords WHERE keyword is NOT NULL AND keyword != ''";
+	$query_rsKeywords .= " AND MATCH(keyword) AGAINST('+".$_GET['kw']."' IN BOOLEAN MODE)";
+	$query_rsKeywords .= "  ORDER BY m DESC";
+	$maxRows_rsKeywords = 100;
+	$_GET['totalRows_rsKeywords'] = 100;
+} else {
+	$sql = "select seq from tbl_seq where tablename = 'cg_short_keywords'";
+	$rs = $dbFrameWork->CacheExecute(3000, $sql);
+	$row = $rs->FetchRow();
+	$_GET['totalRows_rsKeywords'] = $row['seq'];
+	$query_rsKeywords .= "  ORDER BY keyword ASC";
+}
+
+$startRow_rsKeywords = $pageNum_rsKeywords * $maxRows_rsKeywords;
+
+$rsKeywords = $dbFrameWork->CacheSelectLimit(3000, $query_rsKeywords, $maxRows_rsKeywords, $startRow_rsKeywords);
+
+if (isset($_GET['totalRows_rsKeywords'])) {
+  $totalRows_rsKeywords = $_GET['totalRows_rsKeywords'];
+} else {
+  $totalRows_rsKeywords = 10;
+}
+$totalPages_rsKeywords = ceil($totalRows_rsKeywords/$maxRows_rsKeywords)-1;
+?>
+<?php
+$PaginateIt = new PaginateIt();
+$PaginateIt->SetCurrentPage(($pageNum_rsKeywords+1));
+$PaginateIt->SetItemsPerPage($maxRows_rsKeywords);
+$PaginateIt->SetItemCount($totalRows_rsKeywords);
+$paginate = $PaginateIt->GetPageLinks_Old();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/mumbaionline.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>MumbaiOnline.Org.In</title>
+<title>Minisite List</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript">
 var HTTPROOT = "<?php echo HTTPROOT; ?>";
@@ -100,16 +116,38 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 		</div>
 		<div id="center">	
 <!-- InstanceBeginEditable name="EditRegion3" -->
-<h1>Welcome to MumbaiOnline.Org.In: Message</h1>
-<p class="error"><?php 
-echo $_GET['msg'];
-?></p>
-<!-- #BeginLibraryItem "/Library/endtime.lbi" --><?php
-$TIMEEND = microtime(true);
-$time = $TIMEEND - $TIMESTART;
-
-echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seconds ($cache)</div>";
-?><!-- #EndLibraryItem --><p>&nbsp;</p>
+<h1>MiniSite</h1>
+<p><?php 
+for($i=65;$i<=90;$i++) {
+	echo "<a href='keywords.php?q=".chr($i)."'>".chr($i)."</a> ";
+}
+echo "<a href='keywords.php'>All</a> ";
+?>
+</p>
+<form name="searchKw" action="" method="get">
+	<input type="text" name="kw" value="<?php echo $_GET['kw']; ?>" />
+	<input type="submit" name="Submit" value="Search Keyword" />
+    <br />
+    <br />
+</form>
+<?php if($totalRows_rsKeywords>0) { ?>
+<table border="0" cellpadding="5" cellspacing="1" class="table">
+  <tr class="th">
+    <td>MiniSite</td>
+    </tr>
+  <?php while ($row_rsKeywords = $rsKeywords->FetchRow()) { ?>
+    <tr class="td">
+      <td><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $row_rsKeywords['keyword_id']; ?>/news/<?php echo $row_rsKeywords['kw_url_lookup']; ?>.html"><?php echo $row_rsKeywords['keyword']; ?></a></td>
+      </tr>
+    <?php } ?>
+</table>
+<?php if($totalPages_rsKeywords>0) { ?>
+<p><?php echo $paginate; ?></p>
+<?php } ?>
+<?php } else { ?>
+<p class="error">No Site Found.</p>
+<?php } ?>
+<p>&nbsp;</p>
 <!-- InstanceEndEditable -->
 		</div>
 	</div>
