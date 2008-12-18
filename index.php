@@ -62,6 +62,16 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 <meta name="keywords" content="Mumbai, Mumbai Online, All about Mumbai, My Mumbai, Know Mumbai, Mumbai fun, Mumbai Guide, Complete guide for Mumbai, Hospitals in Mumbai, Emergency Services in Mumbai, Mumbai Services Information, Entertainment in Mumbai, Entertainment in Mumbai, Mumbai News, Hotels in Mumbai, Restaurants in Mumbai, Movies in Mumbai, Bars in Mumbai, Mumbai Government, Mumbai Profile, Red Fort, Qutub Minar">
 <meta name="language" content="English">
 <meta name="author" content="Mumbaionline.org.in :: Manish Khanchandani">
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-4851189-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
 <!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>

@@ -40,8 +40,11 @@
 		</li>
 		<li><a href="<?php echo HTTPROOT; ?>/keywords.php"><strong>Minisite</strong></a>
 			<?php 
+			$newsMenu = $common->getRandomKeywords();
+			echo $newsMenu;
+			/*
 			$tmp = "menu_Minisite";
-			$newsMenu = checkcache($tmp, 300);
+			$newsMenu = checkcache($tmp, -300);
 			if($newsMenu) {
 				echo $newsMenu;
 			} else {
@@ -49,6 +52,7 @@
 				cachefunction($tmp, $newsMenu);
 				echo $newsMenu;
 			}
+			*/
 			?>
 		</li>
 		<!--
