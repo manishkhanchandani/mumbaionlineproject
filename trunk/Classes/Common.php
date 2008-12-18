@@ -608,15 +608,15 @@ class Common {
 	}
 	
 	public function getRandomKeywords() {
-		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 20";
-		$rs = mysql_query($sql) or die('error in line '.__LINE__.' of file '.__FILE__.' due to mysql error: '.mysql_error());
-		if(mysql_num_rows($rs)) {
-			$result = '<ul>';
-			while($rec = mysql_fetch_array($rs)) {
-				$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.html">'.ucwords($rec['keyword']).'</a></li>';
-			}
-			$result .= '</ul>';
+		$result = '<ul>';
+		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 25";
+		$rs = $this->dbFrameWork->CacheExecute(3000, $sql);
+		while ($rec = $rs->FetchRow()) {
+			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.mumbai';
+			$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.mumbai">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
+		
 		}
+		$result .= '</ul>';
 		return $result;
 	}
 }

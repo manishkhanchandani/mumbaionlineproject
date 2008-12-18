@@ -137,7 +137,7 @@ echo "<a href='keywords.php'>All</a> ";
     </tr>
   <?php while ($row_rsKeywords = $rsKeywords->FetchRow()) { ?>
     <tr class="td">
-      <td><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $row_rsKeywords['keyword_id']; ?>/news/<?php echo $row_rsKeywords['kw_url_lookup']; ?>.html"><?php echo $row_rsKeywords['keyword']; ?></a></td>
+      <td><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $row_rsKeywords['keyword_id']; ?>/news/<?php echo $row_rsKeywords['kw_url_lookup']; ?>.mumbai"><?php echo $row_rsKeywords['keyword']; ?></a></td>
       </tr>
     <?php } ?>
 </table>
