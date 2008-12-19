@@ -1,6 +1,10 @@
-<?php require_once('../../Connections/conn.php'); ?>
+<?php require_once('Connections/conn.php'); ?>
 <?php
 include_once('start.php');
+if(!$_COOKIE['user_id']) {
+	echo '<p class="error">You are not logged on to the site</p>';
+	exit;
+}
 include('Classes/PaginateIt.php');
 if($_GET['page']) $_GET['pageNum_rsView'] = $_GET['page']-1;
 if(!$_GET['from']) $_GET['from'] = '0001-01-01';
