@@ -72,6 +72,11 @@ var pageTracker = _gat._getTracker("UA-4851189-1");
 pageTracker._initData();
 pageTracker._trackPageview();
 </script>
+
+<script language="javascript">
+	var mkgxyCode = 7;
+</script>
+<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
 <!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>
