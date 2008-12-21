@@ -22,6 +22,7 @@ define('SITENAME', 'Mumbaionline.org.in');
 define('SITEURL', HTTPROOT); 
 define('ADMINNAME', 'Administrator'); 
 define('ADMINEMAIL', 'admin@mumbaionline.org.in'); 
+define('EXTENSION', 'mumbai'); 
 
 // adodb connection
 include('adodb/adodb-exceptions.inc.php'); # load code common to ADOdb
