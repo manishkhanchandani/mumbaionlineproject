@@ -3,7 +3,7 @@ include_once('start.php');
 include('Classes/PaginateIt.php');
 if($_GET['page']) $_GET['pageNum_rsKeywords'] = $_GET['page']-1;
 
-$maxRows_rsKeywords = 10;
+$maxRows_rsKeywords = 100;
 $pageNum_rsKeywords = 0;
 if (isset($_GET['pageNum_rsKeywords'])) {
   $pageNum_rsKeywords = $_GET['pageNum_rsKeywords'];
@@ -26,7 +26,7 @@ if($_GET['q']) {
 	$rs = $dbFrameWork->CacheExecute(3000, $sql);
 	$row = $rs->FetchRow();
 	$_GET['totalRows_rsKeywords'] = $row['seq'];
-	$query_rsKeywords .= "  ORDER BY keyword ASC";
+	$query_rsKeywords .= "  ORDER BY RAND()";
 }
 
 $startRow_rsKeywords = $pageNum_rsKeywords * $maxRows_rsKeywords;
@@ -101,29 +101,14 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 	}
 </script>
 <?php } ?>
-<!-- InstanceBeginEditable name="head" -->
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-4851189-1");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
-
-<script language="javascript">
-	var mkgxyCode = 7;
-</script>
-<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
-<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>
 
 <body>
 <div id="mainContent">
 	<div id="head"></div>
-	<div id="header"><a href="http://www.mumbaionline.org.in"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
+	<div id="header"><a href="<?php echo HTTPROOT; ?>"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
 	<div style="clear:both"></div>
 	<div id="middle">
 		<div id="left">
@@ -152,7 +137,7 @@ echo "<a href='keywords.php'>All</a> ";
     </tr>
   <?php while ($row_rsKeywords = $rsKeywords->FetchRow()) { ?>
     <tr class="td">
-      <td><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $row_rsKeywords['keyword_id']; ?>/news/<?php echo $row_rsKeywords['kw_url_lookup']; ?>.mumbai"><?php echo $row_rsKeywords['keyword']; ?></a></td>
+      <td><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $row_rsKeywords['keyword_id']; ?>/news/<?php echo $row_rsKeywords['kw_url_lookup']; ?>.<?php echo EXTENSION; ?>"><?php echo $row_rsKeywords['keyword']; ?></a></td>
       </tr>
     <?php } ?>
 </table>
@@ -174,6 +159,20 @@ echo "<a href='keywords.php'>All</a> ";
 	</div>
 	<div style="clear:both"></div>
 </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-4851189-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+<script language="javascript">
+	var mkgxyCode = 7;
+</script>
+<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
 <div style="clear:both"></div>
 </body>
 <!-- InstanceEnd --></html>

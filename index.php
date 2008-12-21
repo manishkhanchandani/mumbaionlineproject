@@ -1,7 +1,37 @@
 <?php
 include_once('start.php');
-if(!$_GET['initialUrl'])
-$_GET['initialUrl'] = "home.php";
+
+if(!$_GET['initialUrl']) {
+	// FUNCTIONALITY
+	$j = md5($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
+	$feed = checkcache($j);
+	if(!$feed) {
+		include_once('./Classes/simplepie.php');
+		$simplepie = new SimplePie;
+		$url = $_GET['url'];
+		if(!$url) 
+			$url = 'http://www.google.com/news?sourceid=navclient-ff&rlz=1B3GGGL_enIN279IN280&hl=en&ned=us&q=mumbai&ie=UTF-8&nolr=1&output=rss';
+		else 
+			$url = urldecode($url);
+		$simplepie->set_feed_url($url);
+		$simplepie->init();
+		$dig_feed = $simplepie;
+		$feed = "<ul>";
+		if($dig_feed) {
+			foreach($dig_feed->get_items() as $item) {
+				$feed .= "<li><a href='" .$item->get_link() . "' target='_blank'>" . $item->get_title() . "</a><br />";
+				$desc = str_replace("<a ", "<a target='_blank' ", $item->get_description());
+				$feed .= $desc."
+				</li>";
+			}
+		}
+		$feed .= "</ul>";
+		cachefunction($j, $feed);
+		$cache = 'no cache';
+	} else {
+		$cache = 'cache';
+	}
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/mumbaionline.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -62,7 +92,43 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 <meta name="keywords" content="Mumbai, Mumbai Online, All about Mumbai, My Mumbai, Know Mumbai, Mumbai fun, Mumbai Guide, Complete guide for Mumbai, Hospitals in Mumbai, Emergency Services in Mumbai, Mumbai Services Information, Entertainment in Mumbai, Entertainment in Mumbai, Mumbai News, Hotels in Mumbai, Restaurants in Mumbai, Movies in Mumbai, Bars in Mumbai, Mumbai Government, Mumbai Profile, Red Fort, Qutub Minar">
 <meta name="language" content="English">
 <meta name="author" content="Mumbaionline.org.in :: Manish Khanchandani">
+<!-- InstanceEndEditable -->
+</head>
+<?php flush(); ?>
 
+<body>
+<div id="mainContent">
+	<div id="head"></div>
+	<div id="header"><a href="<?php echo HTTPROOT; ?>"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
+	<div style="clear:both"></div>
+	<div id="middle">
+		<div id="left">
+		<?php include(DOCROOT.'/assets/xtras/menu.php'); ?>
+		</div>
+		<div id="center">	
+<!-- InstanceBeginEditable name="EditRegion3" -->
+<?php if(!$_GET['initialUrl']) { ?>
+<?php 
+echo $feed;
+?><!-- #BeginLibraryItem "/Library/endtime.lbi" --><?php
+$TIMEEND = microtime(true);
+$time = $TIMEEND - $TIMESTART;
+
+echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seconds ($cache)</div>";
+?><!-- #EndLibraryItem -->
+<?php } ?>
+<p>&nbsp;</p>
+<!-- InstanceEndEditable -->
+		</div>
+	</div>
+	<div style="clear:both"></div>
+	<div id="footer" align="center">
+	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
+	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
+      This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
+	</div>
+	<div style="clear:both"></div>
+</div>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -77,33 +143,6 @@ pageTracker._trackPageview();
 	var mkgxyCode = 7;
 </script>
 <script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
-<!-- InstanceEndEditable -->
-</head>
-<?php flush(); ?>
-
-<body>
-<div id="mainContent">
-	<div id="head"></div>
-	<div id="header"><a href="http://www.mumbaionline.org.in"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
-	<div style="clear:both"></div>
-	<div id="middle">
-		<div id="left">
-		<?php include(DOCROOT.'/assets/xtras/menu.php'); ?>
-		</div>
-		<div id="center">	
-<!-- InstanceBeginEditable name="EditRegion3" -->
-<p>&nbsp;</p>
-<!-- InstanceEndEditable -->
-		</div>
-	</div>
-	<div style="clear:both"></div>
-	<div id="footer" align="center">
-	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
-	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
-      This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
-	</div>
-	<div style="clear:both"></div>
-</div>
 <div style="clear:both"></div>
 </body>
 <!-- InstanceEnd --></html>
