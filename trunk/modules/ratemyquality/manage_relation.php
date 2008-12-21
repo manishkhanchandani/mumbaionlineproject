@@ -1,14 +1,19 @@
 <?php require_once('../../Connections/conn.php'); ?>
 <?php
+include_once('start.php');
+if(!$_COOKIE['user_id']) {
+	echo '<p class="error">You are not logged on to the site</p>';
+	exit;
+}
+?>
+<?php
 if($_POST['MM_Insert']==1) {
-	$sql = "delete from rate_my_qualities_relation where id = '".$_GET['id']."'";
-	mysql_query($sql) or die('error');
-	if($_POST['qid']) {
-		foreach($_POST['qid'] as $k=>$v) {
-			$sql = "insert into rate_my_qualities_relation set qid = '".$v."', id = '".$_GET['id']."'";
-			mysql_query($sql) or die('error');
-		}
-	}
+	include_once('Classes/ratequality.php');
+	$ratequality = new ratequality($dbFrameWork);
+	$msg = $ratequality->updateRelation($_POST);
+	$url = HTTPROOT."/modules/ratemyquality/manage_profile.php";
+	header("Location: ".HTTPROOT."/index.php?msg=".urlencode($msg)."&initialUrl=".urlencode($url));
+	exit;
 }
 ?>
 <?php
@@ -41,30 +46,27 @@ $query_rsRelation = sprintf("SELECT * FROM rate_my_qualities_relation WHERE id =
 $rsRelation = mysql_query($query_rsRelation, $conn) or die(mysql_error());
 $row_rsRelation = mysql_fetch_assoc($rsRelation);
 $totalRows_rsRelation = mysql_num_rows($rsRelation);
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
-
-<body>
+?>
 <h1>Choose Quality for Profile &quot;<?php echo $row_rsView['name']; ?>&quot;</h1>
+<?php include(DOCROOT."/modules/ratemyquality/menu.php"); ?>
 <?php if ($totalRows_rsRelation > 0) { // Show if recordset not empty ?>
   <?php do { ?>
     <?php $rel[] = $row_rsRelation['qid']; ?>
     <?php } while ($row_rsRelation = mysql_fetch_assoc($rsRelation)); ?>
-  <?php } // Show if recordset not empty ?><?php if ($totalRows_rsQualities > 0) { // Show if recordset not empty ?>
-    <form id="form1" name="form1" method="post" action="">
+  <?php } // Show if recordset not empty ?>
+  
+  <?php if ($totalRows_rsQualities > 0) { // Show if recordset not empty ?>
+    <form id="form1" name="form1" method="post" action="<?php echo HTTPROOT."/modules/ratemyquality/manage_relation.php"; ?>">
       <p>
         <?php do { ?>
-                <input type="checkbox" name="qid[]" value="<?php echo $row_rsQualities['qid']; ?>" <?php if($rel) { if(in_array($row_rsQualities['qid'],$rel)) { ?>checked="checked"<?php } } ?> />
-                <?php echo $row_rsQualities['quality']; ?>
-                <?php } while ($row_rsQualities = mysql_fetch_assoc($rsQualities)); ?>
+		<input type="checkbox" name="qid[]" value="<?php echo $row_rsQualities['qid']; ?>" <?php if($rel) { if(in_array($row_rsQualities['qid'],$rel)) { ?>checked="checked"<?php } } ?> />
+		<?php echo $row_rsQualities['quality']; ?>
+		<?php } while ($row_rsQualities = mysql_fetch_assoc($rsQualities)); ?>
       </p>
       <p>
         <input type="submit" name="Submit" value="Update Qualities" />
         <input name="MM_Insert" type="hidden" id="MM_Insert" value="1" />
+        <input name="id" type="hidden" id="id" value="<?php echo $_GET['id']; ?>" />
       </p>
     </form>
     <p>&nbsp;</p>
@@ -72,8 +74,6 @@ $totalRows_rsRelation = mysql_num_rows($rsRelation);
 <?php if ($totalRows_rsQualities == 0) { // Show if recordset empty ?>
   <p>No Quality Found. </p>
   <?php } // Show if recordset empty ?>
-</body>
-</html>
 <?php
 mysql_free_result($rsView);
 
