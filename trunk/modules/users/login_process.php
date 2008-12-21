@@ -62,7 +62,14 @@ if($_POST) {
 		}
 	}
 	$msg = "You are successfully logged on our site";
-	header("Location: ".HTTPROOT."/confirm.php?msg=".urlencode($msg));
-	exit;
+	if($_COOKIE['goto']) {
+		$goto = $_COOKIE['goto'];
+		setcookie('goto','','-300','/');
+		header("Location: ".$goto);
+		exit;
+	} else {
+		header("Location: ".HTTPROOT."/confirm.php?msg=".urlencode($msg));
+		exit;
+	}
 }
 ?>
