@@ -16,6 +16,14 @@
 				<?php } ?>
 			</ul>
 		</li>
+		<?php if($_COOKIE['user_id']) { ?>
+		<li><a href="javascript:;"><strong>Rate My Qualities</strong></a>
+			<ul>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/ratemyquality/manage_qualities.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/ratemyquality/manage_qualities.php"); ?>', '1');">Manage Qualities</a></li>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/ratemyquality/manage_profile.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/ratemyquality/manage_profile.php"); ?>', '1');">Manage Profile</a></li>
+			</ul>
+		</li>
+		<?php } ?>
 		<li><a href="javascript:;"><strong>Utilities</strong></a>
 			<ul>
 				<li><a href="javascript:;"><strong>History</strong></a>
