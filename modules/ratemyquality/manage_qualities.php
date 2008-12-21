@@ -11,6 +11,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		$msg = "<p class='error'>Please fill the quality name.</p>";
 	}
 }
+if($_GET['did']) {
+	include_once('Classes/ratequality.php');
+	$ratequality = new ratequality($dbFrameWork);
+	$ratequality->deleteQuality($_GET['did']);
+}
 ?>
 <?php
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -52,14 +57,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   $Result1 = mysql_query($insertSQL, $conn) or die(mysql_error());
 }
 
-if ((isset($_GET['did'])) && ($_GET['did'] != "")) {
-  $deleteSQL = sprintf("DELETE FROM rate_my_qualities_question WHERE qid=%s",
-                       GetSQLValueString($_GET['did'], "int"));
-
-  mysql_select_db($database_conn, $conn);
-  $Result1 = mysql_query($deleteSQL, $conn) or die(mysql_error());
-}
-
 $colname_rsView = "-1";
 if (isset($_COOKIE['user_id'])) {
   $colname_rsView = (get_magic_quotes_gpc()) ? $_COOKIE['user_id'] : addslashes($_COOKIE['user_id']);
@@ -69,15 +66,9 @@ $query_rsView = sprintf("SELECT * FROM rate_my_qualities_question WHERE user_id 
 $rsView = mysql_query($query_rsView, $conn) or die(mysql_error());
 $row_rsView = mysql_fetch_assoc($rsView);
 $totalRows_rsView = mysql_num_rows($rsView);
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
-
-<body>
+?>
 <h1>Add Quality</h1>
+<?php include(DOCROOT."/modules/ratemyquality/menu.php"); ?>
 <?php echo $msg; ?>
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table border="0" cellpadding="5" cellspacing="1" class="table">
@@ -87,11 +78,40 @@ $totalRows_rsView = mysql_num_rows($rsView);
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" class="th">&nbsp;</td>
-      <td class="td"><input type="submit" value="Insert record"></td>
+      <td class="td"><input type="button" value="Insert record" onclick="str=getFormElements(this.form); doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/ratemyquality/manage_qualities.php','POST','', str, 'center', 'yes', '', '0');"></td>
     </tr>
   </table>
   <input type="hidden" name="user_id" value="<?php echo $_COOKIE['user_id']; ?>">
   <input type="hidden" name="MM_insert" value="form1">
+<p><strong>Example of some of qualities are:</strong><br />
+Acceptance . . . Assertiveness . . . Balance . . . Beauty . . . Carefulness
+
+Clarity . . . Compassion . . . Confidence . . . Courage . . . Creativity
+
+Curiosity . . . Energy . . . Enthusiasm . . . Faith . . . Flexibility . . . Forgiveness
+
+Fortitude . . . Freedom . . . Generosity . . . Gentleness . . . Grace . . . Gratitude
+
+Harmony . . . Hope . . . Humility . . . Integrity . . . Joy . . . Kindness . . . Learning
+
+Love . . . Morality . . . Nurturance . . . Objectivity . . . Openness . . . Optimism
+
+Passion . . . Patience . . . Peace . . . Persistence . . . Playfulness
+
+Purpose . . . Resilience . . . Serenity . . . Simplicity . . . Spirituality . . . Stability
+
+Steadfastness . . . Strength . . . Tenderness . . . Tolerance . . . Vitality<br>
+Other examples are: 1. Loving
+2. Patience
+3. Listens
+4. Caring
+5. Humor
+6. Peacefulness
+7. Honesty
+8. Humility
+9. Joyful
+10. Faith in something... whatever it is for them that they can believe in<br>
+Other examples are: 1) Loyalty 2) Empathy 3) Compassion 4) Open-mindedness 5) Honesty 6) Tolerance</p>
 </form>
 <?php if ($totalRows_rsView > 0) { // Show if recordset not empty ?>
   <h1>View My Qualities </h1>
@@ -103,12 +123,11 @@ $totalRows_rsView = mysql_num_rows($rsView);
     <?php do { ?>
       <tr class="td">
         <td><?php echo $row_rsView['quality']; ?></td>
-        <td><a href="manage_qualities.php?did=<?php echo $row_rsView['qid']; ?>">Delete</a></td>
+        <td><a href="#" onClick="if(confirmDelete('Are you sure you want to delete this quality?')) doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/ratemyquality/manage_qualities.php','GET','did=<?php echo $row_rsView['qid']; ?>', '', 'center', 'yes', '', '0');">Delete</a></td>
       </tr>
       <?php } while ($row_rsView = mysql_fetch_assoc($rsView)); ?>
-      </table>
-  <?php } // Show if recordset not empty ?></body>
-</html>
+  </table>
+  <?php } // Show if recordset not empty ?>
 <?php
 mysql_free_result($rsView);
 ?>
