@@ -19,8 +19,9 @@ function doAjaxLoadingText(url,method,getStr,postStr,divtag,loading,cache_key,ca
 	}
 	var Req = getXmlHttpRequestObject(); 
 	if(loading=="yes") { 
-		document.getElementById(divtag).innerHTML = "Loading ..."; 
+		//document.getElementById(divtag).innerHTML = "Loading ..."; 
 		//document.getElementById(divtag).innerHTML = "<img src='images/loading.gif' />"; 
+		document.getElementById(divtag).innerHTML = "<img src='"+HTTPROOT+"/assets/images/ajax-loader.gif' />"; 
 	} 
 	if (Req.readyState == 4 || Req.readyState == 0) {  
 		if(method=="GET") { 
