@@ -612,8 +612,8 @@ class Common {
 		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 25";
 		$rs = $this->dbFrameWork->CacheExecute(3000, $sql);
 		while ($rec = $rs->FetchRow()) {
-			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.mumbai';
-			$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.mumbai">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
+			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION;
+			$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
 		
 		}
 		$result .= '</ul>';
