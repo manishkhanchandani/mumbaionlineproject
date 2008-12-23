@@ -189,7 +189,7 @@ $(function(){
       <td valign="top"><h3>Rate My Following Qualities </h3>
         <?php if ($totalRows_rsQualities > 0) { // Show if recordset not empty ?>
 			<form id="formRating" method="post" name="formRating" action="" class="formrating">
-            <ul class="ratingul">
+            <table>
               <?php do { ?>
 				<?php 
 					$put = '';
@@ -211,14 +211,14 @@ $(function(){
 						$avg_rating_profile[$row_rsQualities['qid']] = round($row_rsQualities['avg_rating']);
 					}
 				?>
-                <li class="ratingli"><div class="ratingcontent"><strong><?php echo $row_rsQualities['quality']; ?></strong><br />
+                <tr><td><div class="ratingcontent"><strong><?php echo $row_rsQualities['quality']; ?></strong><br />
 						<?php for($i=1; $i<=10; $i++) { ?>
 							<input name="star_<?php echo $row_rsQualities['qid']; ?>" type="radio" class="star" value="<?php if($val!=-1) echo $i; else echo ''; ?>" <?php if($disable) echo $disable; if($alreadyvoted[$row_rsQualities['qid']]) echo $disabled; if($avg_rating_profile[$row_rsQualities['qid']]==$i) echo $chk; if($alreadyvoted[$row_rsQualities['qid']]==$i) echo $chk; ?> />
 						<?php } ?>
 					</div>
-				</li>
+				</td></tr>
               <?php } while ($row_rsQualities = mysql_fetch_assoc($rsQualities)); ?>
-            </ul>
+            </table>
 			<blockquote>
 				<?php if($self!=1) { ?>
 				<div><br /><input type="submit" value="<?php if($_COOKIE['user_id']) { ?>Submit scores!<?php } else { ?>Login To Vote<?php } ?>" />
@@ -252,23 +252,11 @@ $(function(){
 	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
 	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
       This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
+<?php include_once(DOCROOT.'/end.php'); ?>
+
 	</div>
 	<div style="clear:both"></div>
 </div>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-4851189-1");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
-
-<script language="javascript">
-	var mkgxyCode = 7;
-</script>
-<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
 <div style="clear:both"></div>
 </body>
 <!-- InstanceEnd --></html>
