@@ -9,8 +9,8 @@ body {
 	color: #333;
 }
 
-h1, h2 { font-family: 'trebuchet ms', verdana, arial; padding: 10px; margin: 0 }
-h1 { font-size: large }
+/*h1, h2 { font-family: 'trebuchet ms', verdana, arial; padding: 10px; margin: 0 }
+h1 { font-size: large }*/
 
 #banner { padding: 15px; color: white; font-size: large; border-bottom: 1px solid #ccc;
     text-align: center }
