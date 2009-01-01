@@ -14,18 +14,21 @@ if($_GET['q']) {
 	$query_rsKeywords .= " AND keyword LIKE '".$_GET['q']."%'";
 	$query_rsKeywords .= "  ORDER BY keyword ASC";
 	$maxRows_rsKeywords = 100;
+	$pageTitle = "Minisite List :: Search Keyword :: ".$_GET['q']." Mumbai";
 	$_GET['totalRows_rsKeywords'] = 100;
 } else if($_GET['kw']) {
 	$query_rsKeywords = "SELECT keyword_id, keyword, kw_url_lookup, MATCH(keyword) AGAINST('+".$_GET['kw']."' IN BOOLEAN MODE) as m FROM cg_short_keywords WHERE keyword is NOT NULL AND keyword != ''";
 	$query_rsKeywords .= " AND MATCH(keyword) AGAINST('+".$_GET['kw']."' IN BOOLEAN MODE)";
 	$query_rsKeywords .= "  ORDER BY m DESC";
 	$maxRows_rsKeywords = 100;
+	$pageTitle = "Minisite List :: Search Keyword :: ".$_GET['kw']." Mumbai";
 	$_GET['totalRows_rsKeywords'] = 100;
 } else {
 	$sql = "select seq from tbl_seq where tablename = 'cg_short_keywords'";
 	$rs = $dbFrameWork->CacheExecute(3000, $sql);
 	$row = $rs->FetchRow();
 	$_GET['totalRows_rsKeywords'] = $row['seq'];
+	$pageTitle = "Minisite List :: Search Keyword :: Complete Mumbai";
 	$query_rsKeywords .= "  ORDER BY RAND()";
 }
 
@@ -35,6 +38,19 @@ $rsKeywords = $dbFrameWork->CacheSelectLimit(3000, $query_rsKeywords, $maxRows_r
 
 if (isset($_GET['totalRows_rsKeywords'])) {
   $totalRows_rsKeywords = $_GET['totalRows_rsKeywords'];
+  if(!$rsKeywords->FetchRow()) {
+  	if($_GET['kw']) {
+		$row = $_GET['kw'];
+		$makeurl = $common->make_url_lookup($row);
+  		$sql = "insert into cg_short_keywords set keyword = '".addslashes(stripslashes(trim($row)))."', kw_url_lookup = '".$makeurl."', created_on = '".date('Y-m-d H:i:s')."', ip = '".addslashes(stripslashes(trim($_SERVER['REMOTE_ADDR'])))."'";
+		$dbFrameWork->Execute($sql);
+		$insertId = $dbFrameWork->Insert_ID();
+		$sql = "update tbl_seq set `seq` = `seq` + 1 WHERE tablename = 'cg_short_keywords'";
+		$dbFrameWork->Execute($sql);
+		header("Location: ".HTTPROOT."/minisite/".($insertId)."/news/".$makeurl.".".EXTENSION);
+		exit;
+	}
+  }
 } else {
   $totalRows_rsKeywords = 10;
 }
@@ -52,7 +68,7 @@ $paginate = $PaginateIt->GetPageLinks_Old();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Minisite List</title>
+<title><?php echo $pageTitle; ?></title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript">
 var HTTPROOT = "<?php echo HTTPROOT; ?>";
@@ -156,23 +172,11 @@ echo "<a href='keywords.php'>All</a> ";
 	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
 	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
       This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
+<?php include_once(DOCROOT.'/end.php'); ?>
+
 	</div>
 	<div style="clear:both"></div>
 </div>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-4851189-1");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
-
-<script language="javascript">
-	var mkgxyCode = 7;
-</script>
-<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
 <div style="clear:both"></div>
 </body>
 <!-- InstanceEnd --></html>

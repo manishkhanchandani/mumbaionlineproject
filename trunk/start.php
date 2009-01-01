@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 ob_start();
 require_once('Connections/conn.php');
 
@@ -23,6 +24,7 @@ define('SITEURL', HTTPROOT);
 define('ADMINNAME', 'Administrator'); 
 define('ADMINEMAIL', 'admin@mumbaionline.org.in'); 
 define('EXTENSION', 'mumbai'); 
+define('MUSICDEFAULT', '/assets/music/SatyamShivamSundaram.mp3'); 
 
 // adodb connection
 include('adodb/adodb-exceptions.inc.php'); # load code common to ADOdb
