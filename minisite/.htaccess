@@ -1,2 +1,6 @@
 RewriteEngine On
 RewriteRule ^([0-9]+)\/(.*)\/(.*)\.mumbai$ index.php?id=$1&action=$2&title=$3 [NC,L]
+RewriteRule ^([0-9]+)\/(.*)\/(.*)\.html$ index.php?id=$1&action=$2&title=$3 [NC,L]
+RewriteRule ^([0-9]+)\/(.*)\/(.*)\.mumbaionline.org.in$ index.php?id=$1&action=$2&title=$3 [NC,L]
+RewriteRule ^([0-9]+)\/(.*)\/(.*)\.mk$ index.php?id=$1&action=$2&title=$3 [NC,L]
+RewriteRule ^([0-9]+)\/(.*)\/(.*)\.manishkhanchandani$ index.php?id=$1&action=$2&title=$3 [NC,L]
