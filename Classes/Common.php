@@ -608,15 +608,39 @@ class Common {
 	}
 	
 	public function getRandomKeywords() {
-		$result = '<ul>';
-		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 25";
-		$rs = $this->dbFrameWork->CacheExecute(3000, $sql);
+		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY `views` DESC LIMIT 25";
+		$rs = $this->dbFrameWork->CacheExecute(5000, $sql);
 		while ($rec = $rs->FetchRow()) {
 			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION;
-			$result .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
+			$news1 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
+			$search1 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/search/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a></li>';
 		
 		}
-		$result .= '</ul>';
+		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 25";
+		$rs = $this->dbFrameWork->CacheExecute(5000, $sql);
+		while ($rec = $rs->FetchRow()) {
+			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION;
+			$news2 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
+			$search2 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a></li>';
+		
+		}
+		$result = "<ul>
+						<li><b>Search</b>
+							<ul>
+								<li><form name=\"mainSearchKw\" action=\"".HTTPROOT."/keywords.php\" method=\"get\"><input type=\"text\" name=\"kw\" size=\"10\" value=\"".$_GET['kw']."\" /><input type=\"submit\" name=\"Submit\" value=\"Go\" /></form></li>
+							</ul>
+						</li>
+						<li><b>Top Viewed</b>
+							<ul>
+								$news1
+							</ul>
+						</li>
+						<li><b>Random Entries</b>
+							<ul>
+								$news2
+							</ul>
+						</li>
+					</ul>";
 		return $result;
 	}
 }
