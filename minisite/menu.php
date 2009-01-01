@@ -1,0 +1,1 @@
+<p align="right"><a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $_GET['id']; ?>/news/<?php echo $_GET['title']; ?>.<?php echo EXTENSION; ?>">News</a> | <a href="<?php echo HTTPROOT; ?>/minisite/<?php echo $_GET['id']; ?>/search/<?php echo $_GET['title']; ?>.<?php echo EXTENSION; ?>">Search</a></p>
