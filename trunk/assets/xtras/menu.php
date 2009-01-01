@@ -1,5 +1,25 @@
 <!-- menu system -->
 <div id="sidetree">
+	<?php if(!$_COOKIE['user_id']) { ?>
+	<div id="login" style="margin-top:5px; border:solid thin green; padding:10px;">
+		<h3 align="center">Login/Register</h3>
+		<form id="form1" name="form1" method="post" action="<?php echo HTTPROOT; ?>/modules/users/login_process.php">
+		  <p><strong>Email:</strong><br /> 
+			<input name="email" type="text" id="email" value="<?php echo $_GET['email']; ?>" size="20" />
+		</p>
+		  <p><strong>Password:</strong><br /> 
+			<input name="password" type="password" id="password" size="20" />
+		</p>
+		  <p>
+			<input name="remember" type="checkbox" id="remember" value="1" />
+		  Remember Me <br />
+		  <a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/forgot.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/forgot.php"); ?>', '1');">Forgot Password</a> </p>
+		  <p>
+			<input type="submit" name="Submit" value="Login/Register" />
+		  </p>
+		</form>
+	</div>
+	<?php } ?>
 	<div class="treeheader">&nbsp;</div>
 	<div id="sidetreecontrol"><a href="">Collapse All</a> | <a href="">Expand All</a></div>
 	<ul id="tree">

@@ -56,6 +56,9 @@ code {
 	width:75%;
 	padding-left: 15px;
 	padding-top: 15px;
+	padding-right: 5px;
+	border:dashed thin black;
+	margin-top: 15px;
 }
 #footer {	
 	margin:20px;
