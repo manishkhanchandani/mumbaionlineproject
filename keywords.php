@@ -169,11 +169,7 @@ echo "<a href='keywords.php'>All</a> ";
 	</div>
 	<div style="clear:both"></div>
 	<div id="footer" align="center">
-	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
-	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
-      This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
-<?php include_once(DOCROOT.'/end.php'); ?>
-
+		<?php include_once(DOCROOT.'/end.php'); ?>
 	</div>
 	<div style="clear:both"></div>
 </div>

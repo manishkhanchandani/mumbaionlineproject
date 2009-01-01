@@ -2,12 +2,12 @@
 include_once('start.php');
 
 if(!$_GET['initialUrl']) {
+	include_once('./Classes/simplepie.php');
+	$simplepie = new SimplePie;
 	// FUNCTIONALITY
 	$j = md5($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']);
 	$feed = checkcache($j);
 	if(!$feed) {
-		include_once('./Classes/simplepie.php');
-		$simplepie = new SimplePie;
 		$url = $_GET['url'];
 		if(!$url) 
 			$url = 'http://www.google.com/news?sourceid=navclient-ff&rlz=1B3GGGL_enIN279IN280&hl=en&ned=us&q=mumbai&ie=UTF-8&nolr=1&output=rss';
@@ -31,6 +31,31 @@ if(!$_GET['initialUrl']) {
 	} else {
 		$cache = 'cache';
 	}
+	// FUNCTIONALITY
+	$title2 = "New Year 2009";
+	$j = md5($_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."-".$title2);
+	$feed2 = checkcache($j);
+	if(!$feed2) {
+		$keyword = urlencode($title2);
+		$url2 = 'http://www.google.com/news?sourceid=navclient-ff&rlz=1B3GGGL_enIN279IN280&hl=en&ned=us&q='.$keyword.'&ie=UTF-8&nolr=1&output=rss';
+		$simplepie->set_feed_url($url2);
+		$simplepie->init();
+		$dig_feed = $simplepie;
+		$feed2 = "<ul>";
+		if($dig_feed) {
+			foreach($dig_feed->get_items() as $item) {
+				$feed2 .= "<li><a href='" .$item->get_link() . "' target='_blank'>" . $item->get_title() . "</a><br />";
+				$desc = str_replace("<a ", "<a target='_blank' ", $item->get_description());
+				$feed2 .= $desc."
+				</li>";
+			}
+		}
+		$feed2 .= "</ul>";
+		cachefunction($j, $feed2);
+		$cache = 'no cache';
+	} else {
+		$cache = 'cache';
+	}	
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -92,6 +117,25 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 <meta name="keywords" content="Mumbai, Mumbai Online, All about Mumbai, My Mumbai, Know Mumbai, Mumbai fun, Mumbai Guide, Complete guide for Mumbai, Hospitals in Mumbai, Emergency Services in Mumbai, Mumbai Services Information, Entertainment in Mumbai, Entertainment in Mumbai, Mumbai News, Hotels in Mumbai, Restaurants in Mumbai, Movies in Mumbai, Bars in Mumbai, Mumbai Government, Mumbai Profile, Red Fort, Qutub Minar">
 <meta name="language" content="English">
 <meta name="author" content="Mumbaionline.org.in :: Manish Khanchandani">
+<style type="text/css">
+#centercolumn {
+
+}
+#centerleftcolumn {
+border:thin solid red;
+float:left;
+margin-right:5px;
+width:49%;
+overflow:auto;
+}
+#centerrightcolumn {
+border:thin solid blue;
+float:left;
+margin-right:5px;
+width:49%;
+overflow:auto;
+}
+</style>
 <!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>
@@ -108,9 +152,22 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 		<div id="center">	
 <!-- InstanceBeginEditable name="EditRegion3" -->
 <?php if(!$_GET['initialUrl']) { ?>
-<?php 
-echo $feed;
-?><!-- #BeginLibraryItem "/Library/endtime.lbi" --><?php
+<div id="centercolumn">
+	<div id="centerleftcolumn">
+		<h3 align="center">Mumbai</h3>
+		<?php 
+			echo $feed;
+		?>
+	</div>
+	<div id="centerrightcolumn">
+		<h3 align="center"><?php echo $title2; ?></h3>
+		<?php 
+			echo $feed2;
+		?>
+	</div>
+</div>
+<div style="clear:both;"></div>
+<!-- #BeginLibraryItem "/Library/endtime.lbi" --><?php
 $TIMEEND = microtime(true);
 $time = $TIMEEND - $TIMESTART;
 
@@ -123,11 +180,7 @@ echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seco
 	</div>
 	<div style="clear:both"></div>
 	<div id="footer" align="center">
-	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
-	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
-      This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
-<?php include_once(DOCROOT.'/end.php'); ?>
-
+		<?php include_once(DOCROOT.'/end.php'); ?>
 	</div>
 	<div style="clear:both"></div>
 </div>
