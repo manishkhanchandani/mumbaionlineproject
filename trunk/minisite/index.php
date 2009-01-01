@@ -15,6 +15,9 @@ $row_rsKeyword = $rsKeyword->FetchRow();
 ?>
 <?php
 switch($_GET['action']) {
+	case 'search':
+	
+		break;
 	case 'news':
 	default:
 		$result = checkcache($j);
@@ -100,20 +103,38 @@ var HTTPROOT = "<?php echo HTTPROOT; ?>";
 </script>
 <?php } ?>
 <!-- InstanceBeginEditable name="head" -->
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-4851189-1");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
+	<?php if($_GET['action']=="search") { ?>
+	<script src="http://www.google.com/jsapi?key=ABQIAAAALUsWUxJrv3zXUNCu0Kas1RSrRvF9Qgn25y1kT-Pt-mhWLPO2YxSKtc1Vkd3dw5VoaVR0_k541txmtQ" type="text/javascript"></script>
+    <script language="Javascript" type="text/javascript">
+    //<![CDATA[
 
-<script language="javascript">
-	var mkgxyCode = 7;
-</script>
-<script language="javascript" type="text/javascript" src="http://10000projects.info/traffic/mkgxy.js"></script>
+    google.load("search", "1");
+
+    function OnLoad() {
+      // Create a search control
+      var searchControl = new google.search.SearchControl();
+
+      // Add in a full set of searchers
+      var localSearch = new google.search.LocalSearch();
+      searchControl.addSearcher(localSearch);
+      searchControl.addSearcher(new google.search.WebSearch());
+      searchControl.addSearcher(new google.search.VideoSearch());
+      searchControl.addSearcher(new google.search.BlogSearch());
+
+      // Set the Local Search center point
+      localSearch.setCenterPoint("New York, NY");
+
+      // Tell the searcher to draw itself and tell it where to attach
+      searchControl.draw(document.getElementById("searchcontrol"));
+
+      // Execute an inital search
+      searchControl.execute("<?php echo urlencode($row_rsKeyword['keyword']); ?>");
+    }
+    google.setOnLoadCallback(OnLoad);
+
+    //]]>
+    </script>
+	<?php } ?>
 <!-- InstanceEndEditable -->
 </head>
 <?php flush(); ?>
@@ -121,7 +142,7 @@ pageTracker._trackPageview();
 <body>
 <div id="mainContent">
 	<div id="head"></div>
-	<div id="header"><a href="http://www.mumbaionline.org.in"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
+	<div id="header"><a href="<?php echo HTTPROOT; ?>"><img src="<?php echo HTTPROOT; ?>/assets/images/mumbaionline_org_in.jpg" border="0" /></a></div>
 	<div style="clear:both"></div>
 	<div id="middle">
 		<div id="left">
@@ -130,6 +151,10 @@ pageTracker._trackPageview();
 		<div id="center">	
 <!-- InstanceBeginEditable name="EditRegion3" -->
 <h1><?php echo ucwords($row_rsKeyword['keyword'])." :: ".ucwords($_GET['action']); ?></h1>
+<?php include(DOCROOT.'/minisite/menu.php'); ?>
+<?php if($_GET['action']=="search") { ?>
+<div id="searchcontrol">Loading...</div>
+<?php } else { ?>
 <?php echo $result; ?>
 <!-- #BeginLibraryItem "/Library/endtime.lbi" -->
 <?php
@@ -139,6 +164,11 @@ $time = $TIMEEND - $TIMESTART;
 echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seconds ($cache)</div>";
 ?>
 <!-- #EndLibraryItem -->
+<?php } ?>
+<?php 
+$query = sprintf("UPDATE cg_short_keywords set `views`=`views`+1 WHERE keyword_id = %s", $_GET['id']);
+$rs = $dbFrameWork->Execute($query);
+?>
 <p>&nbsp;</p>
 <!-- InstanceEndEditable -->
 		</div>
@@ -148,12 +178,11 @@ echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seco
 	  <p>Copyright &copy; 2008-2009 <a href="<?php echo $base; ?>">Mumbaionline.org.in</a> </p>
 	  <p>This site is made using php, mysql, adodb, pear, jquery functionalities<br />
       This site is designed and developed by only one technical lead developer: <a href="mailto:mkgxy@mkgalaxy.com">Manish Khanchandani</a></p>
+<?php include_once(DOCROOT.'/end.php'); ?>
+
 	</div>
 	<div style="clear:both"></div>
 </div>
 <div style="clear:both"></div>
 </body>
 <!-- InstanceEnd --></html>
-<?php
-mysql_free_result($rsKeyword);
-?>

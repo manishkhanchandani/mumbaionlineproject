@@ -32,7 +32,7 @@
 		
 		//NB.: These don't need to be defined (can be undefined/null) so let's save some code!
 		//half:     false,         // just a shortcut to settings.split = 2
-		required: true,         // disables the 'cancel' button so user can only select one of the specified values
+		required: false,         // disables the 'cancel' button so user can only select one of the specified values
 		//readOnly: false,         // disable rating plugin interaction/ values cannot be changed
 		//focus:    function(){},  // executed when stars are focused
 		//blur:     function(){},  // executed when stars are focused
