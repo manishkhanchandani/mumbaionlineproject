@@ -24,18 +24,20 @@
 	<div id="sidetreecontrol"><a href="">Collapse All</a> | <a href="">Expand All</a></div>
 	<ul id="tree">
 		<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/home.php','GET','', '', 'center', 'yes', '<?php echo md5("home.php"); ?>', '1');"><strong>Home</strong></a></li>
-		<li><a href="javascript:;"><strong>Users</strong></a>
+		<?php if($_COOKIE['user_id']) { ?>
+		<li><a href="<?php echo HTTPROOT; ?>/modules/users/logout.php"><strong>Logout</strong></a></li>
+		<?php } ?>
+		<!--<li><a href="javascript:;"><strong>Users</strong></a>
 			<ul>
 				<?php if(!$_COOKIE['user_id']) { ?>
 				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/login.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/login.php"); ?>', '1');">Login/Register</a></li>
 				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/forgot.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/forgot.php"); ?>', '1');">Forgot Password</a></li>
 				<?php } ?>
 				<?php if($_COOKIE['user_id']) { ?>
-				<!--<li><a href="<?php echo $base; ?>index.php/users/change">Change Password</a></li>-->
 				<li><a href="<?php echo HTTPROOT; ?>/modules/users/logout.php">Logout</a></li>
 				<?php } ?>
 			</ul>
-		</li>
+		</li> -->
 		<?php if($_COOKIE['user_id']) { ?>
 		<li><a href="javascript:;"><strong>Rate My Qualities</strong></a>
 			<ul>
@@ -44,6 +46,11 @@
 			</ul>
 		</li>
 		<?php } ?>
+		<li><strong>Articles</strong>
+			<ul>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/articles/happynewyear.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/articles/happynewyear.php"); ?>', '1');">Happy New Year in Different Languages</a></li>
+			</ul>
+		</li>
 		<li><a href="javascript:;"><strong>Utilities</strong></a>
 			<ul>
 				<li><a href="javascript:;"><strong>History</strong></a>
