@@ -1,4 +1,4 @@
-<?php require_once('../../Connections/conn.php'); ?>
+<?php require_once('Connections/conn.php'); ?>
 <?php
 include_once('start.php');
 if(!$_COOKIE['user_id']) {

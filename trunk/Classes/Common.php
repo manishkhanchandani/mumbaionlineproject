@@ -608,20 +608,18 @@ class Common {
 	}
 	
 	public function getRandomKeywords() {
-		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY `views` DESC LIMIT 25";
+		$sql = "select keyword_id, keyword, kw_url_lookup, `views` from cg_short_keywords ORDER BY `views` DESC LIMIT 25";
 		$rs = $this->dbFrameWork->CacheExecute(5000, $sql);
 		while ($rec = $rs->FetchRow()) {
 			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION;
 			$news1 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
-			$search1 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/search/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a></li>';
 		
 		}
-		$sql = "select keyword_id, keyword, kw_url_lookup from cg_short_keywords ORDER BY rand() LIMIT 25";
+		$sql = "select keyword_id, keyword, kw_url_lookup, `views` from cg_short_keywords ORDER BY rand() LIMIT 25";
 		$rs = $this->dbFrameWork->CacheExecute(5000, $sql);
 		while ($rec = $rs->FetchRow()) {
 			$cachename = '/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION;
 			$news2 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a> [<a href="#" onClick=\'doAjaxLoadingText("'.HTTPROOT.'/news.php","GET","keyword='.urlencode($rec['keyword']).'", "", "center", "yes", "'.md5($cachename).'", "1");\'>View</a>]</li>';
-			$search2 .= '<li><a href="'.HTTPROOT.'/minisite/'.$rec['keyword_id'].'/news/'.$rec['kw_url_lookup'].'.'.EXTENSION.'">'.ucwords($rec['keyword']).'</a></li>';
 		
 		}
 		$result = "<ul>
