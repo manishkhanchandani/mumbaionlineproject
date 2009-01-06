@@ -67,8 +67,10 @@ code {
 	color: #FF0000;
 }
 .th {
-	background-color: #00CCFF;
-	text-align: left;	
+	background-color: #0066FF; /*#00CCFF;*/
+	text-align: left;
+	font-weight: bold;
+	color: #FFFFFF;	
 }
 .table {
 	background-color: #0000FF;
