@@ -31,10 +31,10 @@ if($_GET['q']) {
 	$pageTitle = "Minisite List :: Search Keyword :: Complete Mumbai";
 	$query_rsKeywords .= "  ORDER BY RAND()";
 }
-
+if($_GET['page']) $pageTitle .= " :: Page - ".$_GET['page'];
 $startRow_rsKeywords = $pageNum_rsKeywords * $maxRows_rsKeywords;
 
-$rsKeywords = $dbFrameWork->CacheSelectLimit(3000, $query_rsKeywords, $maxRows_rsKeywords, $startRow_rsKeywords);
+$rsKeywords = $dbFrameWork->CacheSelectLimit(10000, $query_rsKeywords, $maxRows_rsKeywords, $startRow_rsKeywords);
 
 if (isset($_GET['totalRows_rsKeywords'])) {
   $totalRows_rsKeywords = $_GET['totalRows_rsKeywords'];

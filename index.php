@@ -174,6 +174,7 @@ $time = $TIMEEND - $TIMESTART;
 echo "<br /><br /><br /><br /><div align='right'><b>Time To Load:</b> $time seconds ($cache)</div>";
 ?><!-- #EndLibraryItem -->
 <?php } ?>
+<!--<script language="JavaScript" src="http://www.yaoti-2.org/free/UID3.js" type="text/javascript"></script><a href="http://www.yaoti.com/en/" target="_blank">online spokesperson</a><script language="JavaScript" src="http://www.yaoti-2.org/free/yaoti.js" type="text/javascript"></script> -->
 <p>&nbsp;</p>
 <!-- InstanceEndEditable -->
 		</div>
