@@ -27,17 +27,6 @@
 		<?php if($_COOKIE['user_id']) { ?>
 		<li><a href="<?php echo HTTPROOT; ?>/modules/users/logout.php"><strong>Logout</strong></a></li>
 		<?php } ?>
-		<!--<li><a href="javascript:;"><strong>Users</strong></a>
-			<ul>
-				<?php if(!$_COOKIE['user_id']) { ?>
-				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/login.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/login.php"); ?>', '1');">Login/Register</a></li>
-				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/users/forgot.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/users/forgot.php"); ?>', '1');">Forgot Password</a></li>
-				<?php } ?>
-				<?php if($_COOKIE['user_id']) { ?>
-				<li><a href="<?php echo HTTPROOT; ?>/modules/users/logout.php">Logout</a></li>
-				<?php } ?>
-			</ul>
-		</li> -->
 		<?php if($_COOKIE['user_id']) { ?>
 		<li><a href="javascript:;"><strong>Rate My Qualities</strong></a>
 			<ul>
@@ -45,7 +34,41 @@
 				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/ratemyquality/manage_profile.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/ratemyquality/manage_profile.php"); ?>', '1');">Manage Profile</a></li>
 			</ul>
 		</li>
+		<li><strong>SMS Reminder</strong>
+			<ul>
+				<li><a href="<?php echo HTTPROOT; ?>/modules/sms/new.php">Add New Reminder</a></li>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/sms/index.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/sms/index.php"); ?>', '1');">My Reminders</a></li>
+				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/sms/inactive.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/sms/inactive.php"); ?>', '1');">Inactive Reminders</a></li>
+			</ul>
+		</li>
 		<?php } ?>
+		<li><strong>Classifieds</strong>
+			<ul>
+				<li><strong>Search</strong>
+					<ul>
+						<li><form name="searchForm" action="<?php echo HTTPROOT; ?>/3rd/classifieds/index.php" method="get"><input type="text" name="q" size="8" maxlength="40" value="<?php echo $_GET['q'];?>">
+	<input type="submit" name="" value="Go">
+  </form></li>
+					</ul>
+				</li>
+				<li><strong>Browse</strong>
+					<ul>
+						<li><a href='<?php echo HTTPROOT; ?>/3rd/classifieds/index.php?a=1<?php echo $keyOut;?>'>All</a></li>
+						<?php
+							$sql = "SELECT * FROM md_categories order by cat_order";
+							$rs = $dbFrameWork->CacheExecute(5000, $sql);
+							while ($rec = $rs->FetchRow()) {
+								$catList .= "<li><a href='".HTTPROOT."/3rd/classifieds/index.php?category=".$rec["cat_id"].$keyOut."'>".$rec["cat_name"]."</a></li>\n" ;							
+							}
+							echo $catList;
+						?>
+					</ul>
+				</li>
+				<?php if($_COOKIE['user_id']) { ?>
+				<li><strong><a href="<?php echo HTTPROOT; ?>/3rd/classifieds/newItem.php?a=1<?php echo $keyOut;?>">Add New Post</a></strong></li>
+				<?php } ?>
+			</ul>
+		</li>
 		<li><strong>Articles</strong>
 			<ul>
 				<li><a href="#" onclick="doAjaxLoadingText('<?php echo HTTPROOT; ?>/modules/articles/happynewyear.php','GET','', '', 'center', 'yes', '<?php echo md5("modules/articles/happynewyear.php"); ?>', '1');">Happy New Year in Different Languages</a></li>
