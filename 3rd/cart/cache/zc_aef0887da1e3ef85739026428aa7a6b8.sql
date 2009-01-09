@@ -1,0 +1,1 @@
+a:1:{i:0;a:4:{s:13:"categories_id";s:2:"63";s:15:"categories_name";s:9:"Documents";s:9:"parent_id";s:1:"0";s:16:"categories_image";s:26:"categories/subcategory.gif";}}

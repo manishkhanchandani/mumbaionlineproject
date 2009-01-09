@@ -1,0 +1,71 @@
+---------------
+Jan 06 2009 9:13 -- inspect
+System Inspection Results: 
+------------------------------
+NA: Webserver => Apache
+NA: HTTP Host => mumbaionline.org.in
+NA: Path_Translated => /home37b/sub004/sc29722-KLXJ/www/december2008/3rd/cart/zc_install/index.php(SCRIPT_FILENAME)
+NA: Real Path => /mounted-storage/home37b/sub004/sc29722-KLXJ/www/december2008/3rd/cart
+NA: Server Free Disk Space => 58.42 GB
+NA: PHP O/S => Linux
+NA: PHP API Mode => apache2handler
+NA: PHP Max Execution Time per page => -1
+WARN: Register Globals => <span class='errors'>ON</span>
+OK: MySQL Support => ON
+OK: PHP Version => 5.2.42-servage7
+OK: PHP Safe Mode => OFF
+OK: PHP Sessions Support => ON
+OK: PHP Session.AutoStart => OFF
+OK: PHP session.use_trans_sid => OFF
+OK: Suggested SQL Cache Folder => /mounted-storage/home37b/sub004/sc29722-KLXJ/www/december2008/3rd/cart/cache
+OK: PHP magic_quotes_runtime setting => OFF
+OK: PHP magic_quotes_sybase setting => OFF
+OK: PHP GD Support => ON
+OK: GD Version => GD bundled (2.0.34 compatible)
+OK: PHP ZLIB Compression Support => ON
+OK: PHP OpenSSL Support => ON
+OK: PHP cURL Support => ON
+OK: CURL NON-SSL Capability => Okay
+OK: CURL SSL Capability => Okay
+OK: PHP Upload Support => ON  upload_max_filesize=50M;  post_max_size=50M
+OK: PHP Upload TMP dir => /shared/upload_tmp
+NA: PHP include_path => .:/usr/local/lib/php/:/home37b/sub004/sc29722-KLXJ/www/december2008/:/home37b/sub004/sc29722-KLXJ/www/december2008/libs/pear/:/home37b/sub004/sc29722-KLXJ/www/december2008/libs/
+NA: PHP SMTP destination => localhost
+NA: PHP sendmail path => /usr/sbin/sendmail -v 445757 -c 29722 -t -i -f sc29722@servage-customer.net
+NA: PHP sendmail 'from' => 
+OK: PHP open_basedir restrictions => 
+WARN: PHP Output Buffering (gzip) => OFF
+OK: PHP FTP Support => ON
+OK: PHP XML Support => ON
+OK: PHP Session.Save_Path => /mounted-storage/home37b/sub004/sc29722-KLXJ/www/december2008/3rd/cart/cache-->Writeable
+OK: includes/configure.php =>  Writeable
+OK: admin/includes/configure.php =>  Writeable
+OK: cache => OK 777 read/write/execute
+OK: images => OK 777 read/write/execute (INCLUDE SUBDIRECTORIES TOO)
+OK: includes/languages/english/html_includes => OK 777 read/write (INCLUDE SUBDIRECTORIES TOO)
+OK: media => OK 777 read/write/execute
+OK: pub => OK 777 read/write/execute
+OK: admin/backups => OK 777 read/write
+OK: admin/images/graphs => OK 777 read/write/execute
+PHP Extensions compiled: zip, libxml, xmlwriter, xmlreader, xml, tokenizer, tidy, session, SimpleXML, SPL, sockets, soap, PDO, standard, Reflection, pspell, posix, pdo_sqlite, pdo_mysql, SQLite, mysqli, mysql, mime_magic, mhash, mcrypt, mbstring, json, imap, iconv, hash, gettext, gd, ftp, filter, exif, dom, date, curl, ctype, calendar, bz2, bcmath, zlib, pcre, openssl, xsl, apache2handler, eAccelerator, phpSHIELD, SourceGuardian, ionCube Loader, Zend Optimizer
+------------------------------
+
+
+---------------
+Jan 06 2009 9:15 -- database_setup1
+Installer - Page: database_setup -- collected information: Array
+(
+    [language] => english
+    [DIR_FS_SQL_CACHE] => /mounted-storage/home37b/sub004/sc29722-KLXJ/www/december2008/3rd/cart/cache
+    [DB_TYPE] => mysql
+    [DB_PREFIX] => zen_
+    [DB_SERVER] => mysql1074.servage.net
+    [DB_SERVER_USERNAME] => *****
+    [DB_SERVER_PASSWORD] => YlhWdGVtVnVZMkZ5ZEE9PQ==
+    [DB_DATABASE] => *****
+    [STORE_SESSIONS] => 
+    [USE_PCONNECT] => 
+    [SQL_CACHE_METHOD] => file
+)
+
+
