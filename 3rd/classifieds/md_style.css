@@ -1,0 +1,100 @@
+.md_pageTitle{ 
+	border-bottom:1px solid #cccccc; font-family:Helvetica,Arial,sans-serif; 
+	font-size:x-large; color:#333333; margin-bottom:20px;
+}
+.md_labelViewItem{font-size:smallest; color:#666666; font-weight:bold;}
+.md_divider{color:#ccc}
+.md_date{float:right; display:inline; font-size:small;}
+.md_label{font-weight:bold; margin-top:16px;}
+.md_labelFinePrint{font-weight:normal;}
+.md_bigButton{ padding:4px; font-size:16px;}
+.md_formTitle{font-size:large; border-bottom:1px solid #ebebeb; margin-bottom:10px; }
+.md_listingTable{ border-bottom:1px solid #cccccc;}
+.md_itemTitle{ font-size:26px; font-family:Helvetica,Arial,sans-serif; color:#333; margin-bottom:12px; border-bottom:1px solid #ccc; }
+.md_itemTitleSub{ color:#333; font-size:small;}
+.md_msg{ 
+	padding:11px;
+	color:white; 
+	font-weight:bold; 
+	background-repeat:no-repeat;
+	padding-left:60px; 
+	background-image: url(images/bg_msg.png); 
+	margin-top:16px; margin-bottom:16px;
+}
+.md_required{ color:#FF3300;}
+.md_listing{ padding-top:12px; padding-bottom:12px; border-bottom:1px solid #ccc;}
+a.md_recordLink{ }
+/*0066D8*/
+a.md_recordLink:link{ color:#003399; font-weight:bold;font-size:small;}
+a.md_recordLink:hover{ text-decoration:none;}
+a.md_recordLink:visited { color:#80684E; font-weight:bold;font-size:small;}
+
+.md_Offering{display:inline; font-size:small; font-style:italic; color:#994800; padding-left:20px;}
+.md_Need{display:inline; font-size:small; padding-left:20px; font-style:italic; color:#759900}
+textarea{font-family:helvetica, arial, sans-serif; padding:10px; font-size:small;}
+#md_container{font-family:helvetica, arial, sans-serif; padding:10px; padding-top:0px; font-size:small;}
+#md_content{ xmargin-top:60px;}
+#md_navigation{background-color:#efefef;}
+#md_submit{margin-top:20px; border-top:1px solid #cccccc; padding-top:20px}
+#md_description{width:100%}
+#md_title{width:100%}
+#md_email{display:none;}
+#navigationBar{height:40px; background-image:url(images/bar_middle.gif)}
+#md_contentForm{
+	background-color:#efefef;
+	padding:16px;
+	border:1px solid #ccc;
+	background-image:url(images/bg_form.gif);
+}
+#md_emailBox{ background-image:url(images/bg_form.gif); border:1px solid #ccc; width:550px; padding:12px; margin-top:30px;}
+#md_listingBox{ border-top:1px solid #cccccc;}
+#md_message{font-family:Arial, Helvetica, sans-serif; font-size:small; padding:4px;}
+#md_filter{padding-bottom:8px;}
+#md_postSomethingContainer{padding-top:12px;}
+#md_myPostLink{margin-top:20px;}
+#headerClassifieds {
+	float:left;
+	width:100%;
+	background:#DAE0D2 url("images/bg.gif") repeat-x bottom;
+	font-size:80%;
+	line-height:normal;
+	background-image: url(images/bg.gif);
+	margin-bottom:8px;
+	font-family:Helvetica,Arial,Sans-serif;
+      }
+#headerClassifieds ul {
+  margin:0;
+  padding:10px 10px 0;
+  list-style:none;
+  }
+#headerClassifieds li {
+  float:left;
+  background:url("images/left.gif") no-repeat left top;
+  margin:0;
+  padding:0 0 0 9px;
+  }
+#headerClassifieds a {
+  display:block;
+  background:url("images/right.gif") no-repeat right top;
+  padding:5px 15px 4px 6px;
+  text-decoration:none;
+  color:black;
+  font-weight:bold;
+  }
+ #headerClassifieds a:hover {
+  text-decoration:underline;
+  color:#003399;
+  }
+#headerClassifieds #current {
+  background-image:url("images/left_on.gif");
+  }
+#headerClassifieds #current a {
+  background-image:url("images/right_on.gif");
+  padding-bottom:5px;
+  color:#003399;
+  }
+#confirmationBox{}
+#md_viewItemContent{padding-top:20px;}
+.md_admin{background-image:url("images/bg_admin.gif"); padding:6px; border: 1px solid maroon; }
+.md_errorField{border:1px solid #CC0000; background-color:#FFDDDD}
+.md_errorText{color:#CC0000; font-weight:bold;}

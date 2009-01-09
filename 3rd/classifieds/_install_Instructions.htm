@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Install Instructions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body{
+	color:#333333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+li {
+	line-height: 28px;
+}
+.fileName {
+	background-color: #FFFF99;
+}
+
+-->
+</style>
+</head>
+
+<body>
+<h2  style="border-bottom:4px solid #4B76CA">Instructions to Install Matterdaddy Marketplace</h2>
+
+Thanks for downloading. A couple fairly simple steps to follow to get this bad-boy 
+installed. If you have trouble or questions there is the <a href="http://matterdaddy.com/phpBB3"><strong>Support 
+Forum</strong></a> 
+<h3>Steps:</h3>
+<ol>
+  <li> <strong>Create database tables</strong>: <strong class="fileName"><a href="sql.txt">sql.txt</a></strong><br>
+    Insert the SQL code below file to create the tables in your database. If you 
+    are unfamiliar with this, install <a href="http://www.phpmyadmin.net/home_page/index.php" target="_blank">phpMyAdmin</a> 
+    as a start. Essentially, you select your database, click on the SQL tab and 
+    paste the code in the big textarea and press 'Go'.<em><br>
+    </em> 
+    <form name="form1" method="post" action="">
+      <p>Copy / Paste this SQL code to create your tables. You can also get the 
+        contents from the included <a href="sql.txt">sql.txt</a>. 
+        <textarea name="textfield" rows="8" style="width:90%">-- 
+-- Table structure for table `md_categories`
+-- 
+
+CREATE TABLE `md_categories` (
+  `cat_id` int(10) unsigned NOT NULL auto_increment,
+  `cat_name` varchar(64) NOT NULL default '',
+  `cat_order` int(2) unsigned NOT NULL default '0',
+  `created` timestamp NOT NULL,
+  PRIMARY KEY  (`cat_id`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `md_postings`
+-- 
+
+CREATE TABLE `md_postings` (
+  `postId` int(10) unsigned NOT NULL auto_increment,
+  `isAvailable` int(1) NOT NULL default '1',
+  `isConfirmed` int(1) NOT NULL default '0',
+  `category` varchar(30) NOT NULL default 'general',
+  `type` varchar(40) NOT NULL default '',
+  `title` varchar(128) NOT NULL default '',
+  `description` mediumblob NOT NULL,
+  `email` varchar(128) NOT NULL default '',
+  `city` varchar(32) default NULL,
+  `zip` int(11) NOT NULL,
+  `name` varchar(30) default NULL,
+  `price` int(10) NOT NULL default '0',
+  `ip` varchar(18) NOT NULL default '',
+  `timeStamp` timestamp NOT NULL,
+  `confirmPassword` varchar(7) NOT NULL default '',
+  `imgURL` varchar(128) default '(none)',
+  `imgURLThumb` varchar(128) default '(none)',
+  PRIMARY KEY  (`postId`),
+  KEY `city` (`city`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+	  </textarea>
+      </p>
+      <p>You should now have a two tables: <em><strong>md_categories</strong></em> 
+        and <em><strong>md_postings</strong></em> 
+    </form>
+  </li>
+  <li><strong>Enter database connection information: <span class="fileName">inc_dbcon.php</span><br>
+    </strong>Update inc_dbcon.php with the respective information to connect to 
+    your database. Example, update the bolded information below.<br>
+    <br>
+    $dbhostname = &quot;<strong>myDomain.com</strong>&quot;;<br>
+    $dbname = &quot;<strong>myDataBaseName</strong>&quot;;<br>
+    $dbusername = &quot;<strong>myDataBaseUsername</strong>&quot;;<br>
+    $dbpassword = &quot;<strong>myDataBasePassword</strong>&quot;;<br>
+    &nbsp; </li>
+  <li><strong>Change the fields in : <span class="fileName">admin/config.php</span></strong><br>
+    There are several variables that you will need to update to get it to work 
+    on you server:<br>
+    <br>
+    $emailAdmin = &quot;<strong>admin@example.com</strong>&quot;; <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Change the email address to be yours or the administrators 
+    email address. When emails from the marketplace are sent out, this is who 
+    they will be from. <br>
+    $urlPath = &quot;<strong>http://www.yourdomain.com/marketplace</strong>&quot;;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;When links in the email are sent out to activate a 
+    listing (confirm a listing), this address will be used along with a custom 
+    URL so that people can click on the link and activate a posting<br>
+    $languageFile = &quot;<strong>language/lang_english.php</strong>&quot;;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;This is the language file that the site uses. <br>
+    <br>
+    If you translate it to any other languages, send me the language file so that 
+    others can benefit, caryevans2000[at]yahoo.com<br>
+  </li>
+</ol>
+<p>&nbsp;</p>
+<p>That's it! You should be ready to roll!<br>
+</p>
+<p>Questions / problems see: <strong><a href="http://matterdaddy.com/phpBB2/viewforum.php?f=1">Support 
+  Forum</a></strong></p>
+<p>&nbsp;</p>
+</body>
+</html>

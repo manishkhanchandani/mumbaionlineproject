@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Change Log</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body{
+	color:#333333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+li {
+	line-height: 28px;
+}
+.fileName {
+	background-color: #FFFF99;
+}
+
+-->
+</style>
+</head>
+
+<body>
+<h2 style="border-bottom:4px solid #4B76CA">Change Log</h2>
+<h4>Updates v1.3</h4>
+<p>Sept 23, 2008</p>
+<ul>
+  <li>Added Search functionality. Files changes are 
+    <ul>
+      <li>index.php (noted in the comments on line 25 and 113)</li>
+      <li> lang_english.php - added supporting strings for null search results 
+        &quot;No results found...&quot; and &quot;Search&quot; and &quot;Go&quot; 
+        for the widgets on the screen</li>
+      <li>categories.php - added the search widgets to </li>
+    </ul>
+  </li>
+  <li>Cleaned up an old sql connection that was being called but not used</li>
+  <li>Added a close to the SQL connection to the footer of files that call the 
+    DB</li>
+  <li>Fixed the URL in the footer referencing where one can download the script. 
+  </li>
+</ul>
+<hr color="#B6C7E9" noshade>
+<h4>Updates v1.2</h4>
+<p>Sept 15, 2008</p>
+<p>- Added mysql_real_escape_string() to all incoming variables to prevent SQL 
+  injection vulnerabilities. <br>
+  - Added lang_danish.php - Danish language support<br>
+  - Changed the footer to be &quot;powered by matterdaddy market&quot;<br>
+  - Updated several links that were pointing to the older support site.<br>
+  - Ensured that /photo directory is included in .zip file<br>
+  - Update some of the install instructions.</p>
+<hr color="#B6C7E9" noshade>
+<h4>Updates v1.1</h4>
+<p>Jan 30, 2008</p>
+<p>This release includes an internationalized version. Thanks to PierreJ for all 
+  the work.</p>
+<p>Pretty puch every file ahs been updated to include support for language.<br>
+  RSS.php has been fixed<br>
+  Removed a validation bug in the controller file.</p>
+<p><strong>If you translate it to any other languages</strong>, send me the language 
+  file so that others can benefit, caryevans2000[at]yahoo.com. Also, there currently 
+  are ommissions in the spanish and french files. If you update those, please 
+  send me the updates and I'll include. Thanks!</p>
+<hr color="#B6C7E9" noshade>
+<h4>Updates v1.05</h4>
+<p>Jan 20, 2008</p>
+<p><strong>controller.php </strong>- added data validation on required fields<br>
+  <strong>viewItem.php - </strong>added / fixed JavaScript data validation<br>
+  <strong>newItem.php</strong> - added JavaScript data validation<br>
+  <strong>md_style.css</strong> - added error styles (at the bottom of the page)<br>
+  <strong>admin/index.php</strong> - added link to the <a href="http://matterdaddy.com/phpBB2/">support 
+  forum</a><br>
+  <strong>_install_Instructions.htm </strong>- updated them</p>
+<hr color="#B6C7E9" noshade>
+<h4><strong>Updates v1.04</strong></h4>
+<p> <strong>controller.php</strong> - Added 'hacker defense' - Thanks Kreuznacher 
+  | wurdzwurk<br>
+  Checks to see if certain bad strings are trying to be submitted.</p>
+<hr color="#B6C7E9" noshade>
+<h4><strong>Updates in v1.03 </strong> </h4>
+<p>Fixed: Typo on $serverPath variable by... On all emails and RSS it now detects 
+  domain and directory so there is no need to emss with $serverPath variable <br>
+  Fixed: On the same file &#8220;email_newItem.php&#8221; on line 8, $_SERVER['SERVER_NAME'] 
+  returns the server name including www. So an email will appear something like 
+  email@www.server.com instead of email@server.com . The same applies from line 
+  9.<br>
+  Fixed: When I uploaded the database I had to manually mark &#8220;postId&#8221; 
+  and &#8220;cat_id&#8221; as auto_increasment to work.<br>
+  Fixed: Updated the whole admin key thing; When I login to admin panel and click 
+  &#8220;View Site in Admin Mode&#8221; after I make a change, like deleting a 
+  post, I have to relogin to be able to make a new change.</p>
+<hr color="#B6C7E9" noshade>
+<p>&nbsp;</p>
+</body>
+</html>
