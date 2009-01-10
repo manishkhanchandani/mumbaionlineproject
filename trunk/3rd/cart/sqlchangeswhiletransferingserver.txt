@@ -1,0 +1,8 @@
+table zen_configuration
+record: 248
+field: configuration_value
+changed to: C:/xampp/htdocs/december2008/3rd/cart/cache/page_parse_time.log
+
+record: 305
+field: configuration_value
+changed to: C:/xampp/htdocs/december2008/3rd/cart/cache
